@@ -24,4 +24,8 @@ public class PlayerMovementSettings : ScriptableObject
     public float jumpEndEarlyGravityModifier = 3;
     public float coyoteTime = .15f;
     public float jumpBuffer = .2f;
+
+    [Header("Shadow")]
+    public float swimSpeed = 18;
+
 }
