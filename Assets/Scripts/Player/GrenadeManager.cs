@@ -6,22 +6,23 @@ public class GrenadeManager : MonoBehaviour
 {
     [SerializeField] private GameObject shadowGrenade;
     private Queue<GameObject> grenadePool;
-    private Rigidbody2D rb;
+    [SerializeField]private float grenadeSpeed;
     [SerializeField] private GameObject throwOrigin;
+    [SerializeField] private GameObject shadow;
 
     private void Awake()
     {
         grenadePool = new Queue<GameObject>();
-        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        Debug.Log("PENIS");
-        for (int i = 0; i < 20 ; i++)
+        for (int i = 0; i < 10 ; i++)
         {
             GameObject goo = Instantiate(shadowGrenade);
             goo.transform.parent = transform;
+            goo.GetComponent<ShadowGernadeController>().setGrenadeManager(this);
+            goo.GetComponent<ShadowGernadeController>().setShadow(shadow);
             goo.SetActive(false);
             grenadePool.Enqueue(goo);
         }
@@ -36,7 +37,8 @@ public class GrenadeManager : MonoBehaviour
             if (grenadePool.Count > 0)
             {
                 GameObject goo = grenadePool.Dequeue();
-                goo.GetComponent<ShadowGernadeController>().setInitialVelocity(10 + rb.velocity.magnitude * 0.5f);
+                goo.GetComponent<ShadowGernadeController>().setInitialVelocity(grenadeSpeed);
+                
                 goo.SetActive(true);
 
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -59,7 +61,7 @@ public class GrenadeManager : MonoBehaviour
         }
     }
 
-    public void ReturnGrenadeToPool(GameObject grenade)
+    public void addToPool(GameObject grenade)
     {
         grenade.SetActive(false);
         grenadePool.Enqueue(grenade);
