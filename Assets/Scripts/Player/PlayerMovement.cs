@@ -1,28 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TarodevController;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerMovementSettings settings;
-    [SerializeField] private GameObject feet;
-    [SerializeField] private GameObject head;
     private Rigidbody2D rb;
     private CapsuleCollider2D collider;
-    [SerializeField]private Vector2 curVelocity;
+    private Vector2 curVelocity;
     private bool cachedQueryStartInColliders;
     private InputData inputData;
     private float timeAC;
 
     //Jumping
-    [SerializeField]private bool isGrounded;
+    private bool isGrounded;
     private bool coyoteOn;
     private bool jumpEndedEarly;
     private bool canJumpBuffer;
-    [SerializeField]private bool jumping;
+    private bool jumping;
     private float jumpTime;
     private float ungroundedTime = float.MinValue;
 
@@ -78,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
         Physics2D.queriesStartInColliders = false;
         bool groundHit = Physics2D.CapsuleCast(collider.bounds.center, collider.size, collider.direction, 0, Vector2.down, settings.groundedDistance, settings.GoundLayer);
-        bool ceilingHit = Physics2D.Raycast(head.transform.position, Vector2.up, settings.groundedDistance, settings.GoundLayer);
+        bool ceilingHit = Physics2D.CapsuleCast(collider.bounds.center, collider.size, collider.direction, 0, Vector2.up, settings.groundedDistance, settings.GoundLayer); ;
 
         if (ceilingHit) curVelocity.y = Math.Min(0, curVelocity.y);
 
@@ -88,13 +85,11 @@ public class PlayerMovement : MonoBehaviour
             coyoteOn = true;
             canJumpBuffer = true;
             jumpEndedEarly = false;
-            //Grounded Changed
         }
         else if (isGrounded && !groundHit)
         {
             isGrounded = false;
             ungroundedTime = timeAC;
-            //Grounded Changed
         }
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
