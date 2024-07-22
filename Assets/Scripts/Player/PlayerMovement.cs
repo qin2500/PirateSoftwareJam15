@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerMovement : MonoBehaviour
@@ -27,6 +28,9 @@ public class PlayerMovement : MonoBehaviour
     private bool onShadow = false;
     [SerializeField]private bool swimming;
     [SerializeField]private bool shadowJump;
+
+    public UnityEvent onPlayerSwim;
+    public UnityEvent onPlayerSurface;
 
 
     public struct InputData
@@ -172,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = false;
             shadowJump = true;
+            onPlayerSurface.Invoke();
         }
         
 
@@ -190,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = true;
             onShadow = false;
+            onPlayerSwim.Invoke();
         }
     }
 }

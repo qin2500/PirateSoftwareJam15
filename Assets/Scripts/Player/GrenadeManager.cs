@@ -9,10 +9,12 @@ public class GrenadeManager : MonoBehaviour
     [SerializeField]private float grenadeSpeed;
     [SerializeField] private GameObject throwOrigin;
     [SerializeField] private GameObject shadow;
+    private PlayerMovement playerMovement;
 
     private void Awake()
     {
         grenadePool = new Queue<GameObject>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Start()
@@ -23,6 +25,7 @@ public class GrenadeManager : MonoBehaviour
             goo.transform.parent = transform;
             goo.GetComponent<ShadowGernadeController>().setGrenadeManager(this);
             goo.GetComponent<ShadowGernadeController>().setShadow(shadow);
+            goo.GetComponent<ShadowGernadeController>().playerMovement = playerMovement;
             goo.SetActive(false);
             grenadePool.Enqueue(goo);
         }

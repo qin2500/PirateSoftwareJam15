@@ -10,6 +10,7 @@ public class ShadowGernadeController : MonoBehaviour
     public LayerMask ground;
     private GrenadeManager manager;
     private GameObject shadow;
+    public PlayerMovement playerMovement;
     [SerializeField] private float velocity = 500f; 
 
     private void Awake()
@@ -44,6 +45,7 @@ public class ShadowGernadeController : MonoBehaviour
                 {
                     GameObject spawnedShadow = Instantiate(shadow);
                     spawnedShadow.transform.position = contact.point;
+                    spawnedShadow.GetComponent<ShadowBoxController>().setPlayerMovement(playerMovement);
 
                     rb.velocity = Vector2.zero;
                     rb.angularVelocity = 0f;
