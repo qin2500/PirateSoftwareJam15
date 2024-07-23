@@ -29,10 +29,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]private bool swimming;
     [SerializeField]private bool shadowJump;
 
-    public UnityEvent onPlayerSwim;
-    public UnityEvent onPlayerSurface;
-
-
     public struct InputData
     {
         public float horizonatal;
@@ -176,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = false;
             shadowJump = true;
-            onPlayerSurface.Invoke();
         }
         
 
@@ -195,7 +190,11 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = true;
             onShadow = false;
-            onPlayerSwim.Invoke();
         }
+    }
+
+    public bool getSwimming()
+    {
+        return swimming;
     }
 }

@@ -45,7 +45,6 @@ public class ShadowGernadeController : MonoBehaviour
                 {
                     GameObject spawnedShadow = Instantiate(shadow);
                     spawnedShadow.transform.position = contact.point;
-                    spawnedShadow.GetComponent<ShadowBoxController>().setPlayerMovement(playerMovement);
 
                     rb.velocity = Vector2.zero;
                     rb.angularVelocity = 0f;
