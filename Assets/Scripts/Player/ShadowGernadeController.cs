@@ -27,7 +27,8 @@ public class ShadowGernadeController : MonoBehaviour
     {
         yield return null; 
         rb.velocity = Vector2.zero;
-        rb.AddForce(transform.up * velocity, ForceMode2D.Impulse); 
+        rb.AddForce(transform.up * velocity, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * velocity * 0.5f, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

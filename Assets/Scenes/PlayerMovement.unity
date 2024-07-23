@@ -577,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 635096485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6953574, y: 13.95, z: -10}
+  m_LocalPosition: {x: 1.6954842, y: 13.95, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -889,6 +889,7 @@ GameObject:
   - component: {fileID: 1228687584}
   - component: {fileID: 1228687585}
   - component: {fileID: 1228687586}
+  - component: {fileID: 1228687587}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1020,6 +1021,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggers: []
+--- !u!114 &1228687587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228687579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906b500c8f15b08489433b66f1d34f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionPoolSize: 10
+  throwPower: 24
+  timeToDisableBullet: 1
+  lightBullet: {fileID: 5068252993478190302, guid: 9e9a6f56d69df49438727b20ef202c42, type: 3}
+  bulletOrigin: {fileID: 686460017}
 --- !u!1 &1293861445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,7 +1516,7 @@ Transform:
   m_GameObject: {fileID: 1870544487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6953574, y: 13.95, z: -10}
+  m_LocalPosition: {x: 1.6954842, y: 13.95, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1760,7 +1778,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1870544490}
   - {fileID: 635096487}
-  - {fileID: 1647778209}
   - {fileID: 1228687583}
   - {fileID: 378967191}
   - {fileID: 1293861448}
@@ -1769,3 +1786,4 @@ SceneRoots:
   - {fileID: 1676070076}
   - {fileID: 815934208}
   - {fileID: 54361998}
+  - {fileID: 1647778209}

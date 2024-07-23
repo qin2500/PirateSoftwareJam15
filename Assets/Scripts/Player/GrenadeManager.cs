@@ -19,7 +19,7 @@ public class GrenadeManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 10 ; i++)
+        for (int i = 0; i < 5 ; i++)
         {
             GameObject goo = Instantiate(shadowGrenade);
             goo.transform.parent = transform;
@@ -35,8 +35,6 @@ public class GrenadeManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Right mouse button clicked");
-
             if (grenadePool.Count > 0)
             {
                 GameObject goo = grenadePool.Dequeue();
