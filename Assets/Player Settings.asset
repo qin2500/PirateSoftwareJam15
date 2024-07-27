@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   intergerInputSnapping: 1
-  maxSpeed: 14
+  maxSpeed: 10
   acceleration: 120
   groundDeceleration: 80
   airDeceleration: 30
@@ -31,6 +31,6 @@ MonoBehaviour:
   jumpEndEarlyGravityModifier: 3
   coyoteTime: 0.15
   jumpBuffer: 0.2
-  swimSpeed: 18
+  swimSpeed: 20
   shadowJumpPower: 60
   shadowJumpHorizontalAcceleration: 10

@@ -14,7 +14,7 @@ public class SwimBoundsController : MonoBehaviour
     }
     void Update()
     {
-        if(triggers.Count > 0 && player.getSwimming())
+        if (triggers.Count > 0 && player.getSwimming())
         {
             Vector2 position = transform.position;
             Bounds combinedBounds = CalculateCombinedBounds();
@@ -30,13 +30,13 @@ public class SwimBoundsController : MonoBehaviour
     {
         if (collision.CompareTag("Shadow"))
         {
-            if(!triggers.Contains(collision)) triggers.Add(collision);
+            if (!triggers.Contains(collision)) triggers.Add(collision);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(triggers.Contains(collision)) triggers.Remove(collision);
+        if (triggers.Contains(collision)) triggers.Remove(collision);
     }
 
     private Bounds CalculateCombinedBounds()

@@ -197,4 +197,14 @@ public class PlayerMovement : MonoBehaviour
     {
         return swimming;
     }
+
+    public Vector2 getCurVelocity()
+    {
+        return curVelocity;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
 }
