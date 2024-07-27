@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onShadow = false;
     [SerializeField]private bool swimming;
     [SerializeField]private bool shadowJump;
+    [HideInInspector]public event Action onDive;
 
     public struct InputData
     {
@@ -190,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = true;
             onShadow = false;
+            onDive.Invoke();
         }
     }
 

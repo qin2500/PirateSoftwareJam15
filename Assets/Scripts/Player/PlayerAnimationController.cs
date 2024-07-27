@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerAnimationController : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerMovement.onDive += playDive;
+
         playerAnimator= GetComponent<Animator>();
     }
 
@@ -20,27 +23,36 @@ public class PlayerAnimationController : MonoBehaviour
         Vector2 curVelocity = playerMovement.getCurVelocity();
         if (curVelocity.x != 0) sprite.flipX = curVelocity.x < 0;
 
-        if (playerMovement.getIsGrounded())
+        if(!playerMovement.getSwimming())
         {
-            if(curVelocity.x != 0)
+            if (playerMovement.getIsGrounded())
             {
-                playerAnimator.Play("Run");
+                if (curVelocity.x != 0)
+                {
+                    playerAnimator.Play("Run");
+                }
+                else
+                {
+                    playerAnimator.Play("Idle");
+                }
             }
             else
             {
-                playerAnimator.Play("Idle");
+                if (curVelocity.y > 0)
+                {
+                    playerAnimator.Play("Jump");
+                }
+                else if (curVelocity.y < 0)
+                {
+                    playerAnimator.Play("Fall");
+                }
             }
         }
-        else
-        {
-            if(curVelocity.y > 0)
-            {
-                playerAnimator.Play("Jump");
-            }
-            else if(curVelocity.y < 0)
-            {
-                playerAnimator.Play("Fall");
-            }
-        }
+        
+    }
+
+    public void playDive()
+    {
+        playerAnimator.Play("Dive");
     }
 }

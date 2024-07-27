@@ -40,7 +40,6 @@ public class LightBulletController : MonoBehaviour
     }
     private void killBullet()
     {
-        Debug.Log("Penis");
         mainAttackController.returnToPool(gameObject);
     }
 
