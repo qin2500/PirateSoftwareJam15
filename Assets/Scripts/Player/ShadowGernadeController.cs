@@ -11,7 +11,8 @@ public class ShadowGernadeController : MonoBehaviour
     private GrenadeManager manager;
     private GameObject shadow;
     public PlayerMovement playerMovement;
-    [SerializeField] private float velocity = 500f; 
+    [SerializeField] private float velocity = 500f;
+    private float lifeTime;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class ShadowGernadeController : MonoBehaviour
 
     private IEnumerator ApplyInitialForce()
     {
-        yield return null; 
+        yield return null;  
         rb.velocity = Vector2.zero;
         rb.AddForce(transform.up * velocity, ForceMode2D.Impulse);
         rb.AddForce(Vector2.up * velocity * 0.5f, ForceMode2D.Impulse);
@@ -46,6 +47,7 @@ public class ShadowGernadeController : MonoBehaviour
                 {
                     GameObject spawnedShadow = Instantiate(shadow);
                     spawnedShadow.transform.position = contact.point;
+                    spawnedShadow.GetComponent<ShadowPuddleController>().setLifeTime(lifeTime);
 
                     rb.velocity = Vector2.zero;
                     rb.angularVelocity = 0f;
@@ -77,6 +79,10 @@ public class ShadowGernadeController : MonoBehaviour
     public void setShadow(GameObject shadow)
     {
         this.shadow= shadow;
+    }
+    public void setLifeTime(float time)
+    {
+        lifeTime = time;
     }
 
 }

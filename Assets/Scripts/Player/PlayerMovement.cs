@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         CheckCollision();
 
         shadow();
-        jump();
+        handleJump();
         movementHandler();
         gravity();
 
@@ -104,6 +104,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.transform.CompareTag("Shadow"))
+        {
+            onShadow = true;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision == null) return;
         if (collision.transform.CompareTag("Shadow"))
@@ -152,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void jump()
+    private void handleJump()
     {
         if (!jumpEndedEarly && !isGrounded && !inputData.jumpHeld && rb.velocity.y > 0 && !shadowJump) jumpEndedEarly = true;
 
@@ -194,6 +202,10 @@ public class PlayerMovement : MonoBehaviour
             onDive.Invoke();
         }
     }
+    public void jump()
+    {
+        jumping = true;
+    }
 
     public bool getSwimming()
     {
@@ -208,5 +220,10 @@ public class PlayerMovement : MonoBehaviour
     public bool getIsGrounded()
     {
         return isGrounded;
+    }
+
+    public void setSwimming(bool value)
+    {
+        swimming = value;
     }
 }
