@@ -21,11 +21,11 @@ MonoBehaviour:
   intergerInputSnapping: 1
   maxSpeed: 10
   acceleration: 120
-  groundDeceleration: 80
+  groundDeceleration: 90
   airDeceleration: 30
   groundingForce: -1.5
   groundedDistance: 0.05
-  jumpPower: 30
+  jumpPower: 25
   maxFallSpeed: 40
   fallAcceleration: 110
   jumpEndEarlyGravityModifier: 3

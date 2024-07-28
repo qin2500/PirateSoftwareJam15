@@ -10,6 +10,7 @@ public class LightBulletController : MonoBehaviour
     private Rigidbody2D rb;
     private float throwPower;
     private LayerMask ground;
+    private int damage; 
 
     public float timeToDisable;
 
@@ -35,7 +36,12 @@ public class LightBulletController : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & ground) != 0)
         {
-            mainAttackController.returnToPool(gameObject);
+            killBullet();
+        }
+        else if(collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
+            killBullet();
         }
     }
     private void killBullet()
@@ -51,5 +57,9 @@ public class LightBulletController : MonoBehaviour
     public void setMainAttackController(MainAttackController controller)
     {
         mainAttackController = controller;
+    }
+    public void setDamage(int damage)
+    {
+        this.damage = damage;
     }
 }

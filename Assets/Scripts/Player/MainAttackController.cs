@@ -9,6 +9,7 @@ public class MainAttackController : MonoBehaviour
     [SerializeField] private float timeToDisableBullet;
     [SerializeField] private GameObject lightBullet;
     [SerializeField] private GameObject bulletOrigin;
+    [SerializeField] private int damage;
 
     private Queue<GameObject> potionPool;
 
@@ -45,6 +46,7 @@ public class MainAttackController : MonoBehaviour
                 bullet.transform.parent = transform;
                 bullet.transform.position = bulletOrigin.transform.position;
                 bullet.GetComponent<LightBulletController>().setThrowPower(throwPower);
+                bullet.GetComponent<LightBulletController>().setDamage(damage) ;
 
                 bullet.SetActive(true);
 
