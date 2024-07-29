@@ -26,7 +26,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spriteRenderer.flipX = playerDir == 1;
+        if(playerDir != 0)spriteRenderer.flipX = playerDir == -1;
         if(player)
         {
             if (player.transform.position.x > transform.position.x)

@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour, Damageable
     [HideInInspector]public bool isDead;
     [SerializeField] private float deathDelay = 2f;
     [SerializeField] GameObject deathEffect;
+    [SerializeField] GameObject particalOrigin;
 
     [SerializeField] Animator spriteAnimator;
     public void Awake()
@@ -33,6 +34,11 @@ public class EnemyHealth : MonoBehaviour, Damageable
     }
     private void OnDestroy()
     {
-        if(deathEffect) Instantiate(deathEffect, transform.position, Quaternion.identity);
+        if (deathEffect)
+        {
+            if (!particalOrigin)
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
+            else Instantiate(deathEffect, particalOrigin.transform.position, Quaternion.identity);
+        }
     }
 }
