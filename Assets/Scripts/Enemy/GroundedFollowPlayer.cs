@@ -9,6 +9,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float acceleration;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float deceleration;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Rigidbody2D rb;
     private Vector2 curVelocity;
@@ -25,6 +26,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(playerDir != 0)spriteRenderer.flipX = playerDir == -1;
         if(player)
         {
             if (player.transform.position.x > transform.position.x)
