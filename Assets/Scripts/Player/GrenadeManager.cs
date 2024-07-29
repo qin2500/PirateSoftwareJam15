@@ -9,6 +9,7 @@ public class GrenadeManager : MonoBehaviour
     [SerializeField]private float grenadeSpeed;
     [SerializeField] private GameObject throwOrigin;
     [SerializeField] private GameObject shadow;
+    [SerializeField] private float shadowPuddleLife;
     private PlayerMovement playerMovement;
 
     private void Awake()
@@ -26,6 +27,7 @@ public class GrenadeManager : MonoBehaviour
             goo.GetComponent<ShadowGernadeController>().setGrenadeManager(this);
             goo.GetComponent<ShadowGernadeController>().setShadow(shadow);
             goo.GetComponent<ShadowGernadeController>().playerMovement = playerMovement;
+            goo.GetComponent<ShadowGernadeController>().setLifeTime(shadowPuddleLife);
             goo.SetActive(false);
             grenadePool.Enqueue(goo);
         }

@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onShadow = false;
     [SerializeField]private bool swimming;
     [SerializeField]private bool shadowJump;
+    [HideInInspector]public event Action onDive;
 
     public struct InputData
     {
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         CheckCollision();
 
         shadow();
-        jump();
+        handleJump();
         movementHandler();
         gravity();
 
@@ -103,6 +104,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.transform.CompareTag("Shadow"))
+        {
+            onShadow = true;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision == null) return;
         if (collision.transform.CompareTag("Shadow"))
@@ -151,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void jump()
+    private void handleJump()
     {
         if (!jumpEndedEarly && !isGrounded && !inputData.jumpHeld && rb.velocity.y > 0 && !shadowJump) jumpEndedEarly = true;
 
@@ -190,11 +199,31 @@ public class PlayerMovement : MonoBehaviour
         {
             swimming = true;
             onShadow = false;
+            onDive.Invoke();
         }
+    }
+    public void jump()
+    {
+        jumping = true;
     }
 
     public bool getSwimming()
     {
         return swimming;
+    }
+
+    public Vector2 getCurVelocity()
+    {
+        return curVelocity;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public void setSwimming(bool value)
+    {
+        swimming = value;
     }
 }
