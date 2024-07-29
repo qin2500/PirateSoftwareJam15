@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour, Damageable
     public int curHealth;
     [HideInInspector]public bool isDead;
     [SerializeField] private float deathDelay = 2f;
+    [SerializeField] GameObject deathEffect;
 
     [SerializeField] Animator spriteAnimator;
     public void Awake()
@@ -29,5 +30,9 @@ public class EnemyHealth : MonoBehaviour, Damageable
         if(spriteAnimator)spriteAnimator.Play("Death");
         isDead= true;
         Destroy(gameObject, deathDelay);
+    }
+    private void OnDestroy()
+    {
+        if(deathEffect) Instantiate(deathEffect, transform.position, Quaternion.identity);
     }
 }
