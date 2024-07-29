@@ -17,9 +17,6 @@ public static class GlobalReferences
     //public static SoundMixerManager SOUNDMIXERMANAGER { get {return soundMixerManager; } set {soundMixerManager = value;}}
     public static GameObject STARTINDICATOR { get { return startIndicator; } set { startIndicator = value; } }
     public static Player PLAYER { get { return player; } set { player = value; } }
-
-    public const int NUMBEROFLEVELS = 5;
-    public static int initalLeaderboardIndex = 0;
 }
 
 public class Player
@@ -29,32 +26,16 @@ public class Player
     public string Username { get { return username; } set { username = value; } }
     public int Score { get { return score; } set { score = value; } }
     public Vector2 startPosition = new Vector2(-2.62f, 3.55f);
+    public int potionCooldown = 0;
 }
 
-public class AlchemyUpgrade
-{
-    private HashSet<>
-    public override string ToString()
-    {
-        return base.ToString();
-    }
-} 
-
-public class Pentagram
-{
-    private AlchemyUpgrade[] upgrades;
-
-}
 
 public static class SceneNames
 {
     public const string MAINMENU = "MainMenu";
-    public const string LEVELSELECTOR = "LevelSelector";
     public const string PLAYERCONTROLLER = "Player Controller";
     public const string CREDITS = "Credits";
     public const string PAUSEMENU = "PauseMenu";
     public const string LEVELCONTROLLER = "LevelController";
-    public const string NAMESELECTOR = "NameSelector";
     public const string GAMEMANAGER = "GameManager";
-    public const string LEADERBOARD = "Leaderboard";
 }

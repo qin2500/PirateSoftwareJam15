@@ -8,13 +8,9 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
 
-    private int _level = 0;
-    private bool _timerActive = false;
-    private float _currentTime;
-    private int deaths = 0;
+    private int _wave = 0;
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private TMP_Text deathCounter;
-    [SerializeField] private TMP_Text levelCounter;
+    [SerializeField] private TMP_Text waveCounter;
 
 
     private bool stopUpdating = false;
@@ -42,12 +38,11 @@ public class LevelManager : MonoBehaviour
         if (stopUpdating) return;
         if (GlobalEvents.PlayerStartedMoving.Invoked() && !GlobalEvents.PlayerPause.Invoked())
         {
-            _timerActive = true;
+            //will probably signal wave to start/resume
         }
 
         if (GlobalEvents.PlayerDeath.Invoked())
         {
-            deathCounter.text = "Deaths: " + ++deaths;
             restartLevel();
             GlobalEvents.PlayerDeath.uninvoke();
             GlobalEvents.LevelComplete.uninvoke();
@@ -56,8 +51,7 @@ public class LevelManager : MonoBehaviour
 
         if (GlobalEvents.LevelComplete.Invoked())
         {
-            completeLevel();
-            GlobalEvents.LevelComplete.uninvoke();
+            loadMainMenu();
             return;
         }
 
@@ -82,53 +76,40 @@ public class LevelManager : MonoBehaviour
 
         }
 
-        if (_timerActive)
-        {
-            _currentTime += Time.deltaTime;
-        }
-
-        TimeSpan time = TimeSpan.FromSeconds(_currentTime);
-        _text.text = time.Minutes + ":" + time.Seconds + ":" + time.Milliseconds;
-
-        
     }
 
-    public void setLevel(int level)
+    public void setWave(int wave)
     {
 
-        if (level == 0)
+        if (wave == 0)
         {
-            Debug.Log("Some bozo tried to set the level to 0");
-            throw new Exception("level cannot be set to 0");
+            Debug.Log("Some bozo tried to set the wave to 0");
+            throw new Exception("wave cannot be set to 0");
         }
 
-        UnloadLevel(() =>
+        UnloadWave(() =>
         {
-            this._level = level;
-            Debug.Log("Loading level: " + this._level);
-            SceneManager.LoadSceneAsync("Level " + this._level, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+            Debug.Log("Loading wave: " + this._wave);
+            SceneManager.LoadSceneAsync("wave " + this._wave, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
             {
                 SceneManager.LoadSceneAsync("Player Controller", mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
                 {
-                    Debug.Log("Loaded level: " + this._level);
+                    Debug.Log("Loaded wave: " + this._wave);
 
-                    if (!GlobalEvents.FullPlaythroughInProgress.Invoked()) resetTimer();
 
-                    unpauseTimer();
-
-                    levelCounter.text = "Level " + this._level;
+                    waveCounter.text = "Wave " + this._wave;
                 };
             };
         });
     }
 
-    public void UnloadLevel(System.Action callback)
+    public void UnloadWave(System.Action callback)
     {
-        Debug.Log("unload level called for level: " + this._level);
-        if (this._level > 0)
+        Debug.Log("unload wave called for wave: " + this._wave);
+        if (this._wave > 0)
         {
-            Debug.Log("Unloading level: " + this._level);
-            SceneManager.UnloadSceneAsync("Level " + this._level).completed += (asyncOperation) =>
+            Debug.Log("Unloading wave: " + this._wave);
+            SceneManager.UnloadSceneAsync("wave " + this._wave).completed += (asyncOperation) =>
             {
                 SceneManager.UnloadSceneAsync("Player Controller").completed += (asyncOperation) =>
                 {
@@ -141,62 +122,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void incrementLevel() { setLevel(this._level + 1); }
+    public void incrementLevel() { setWave(this._wave + 1); }
 
     public void restartLevel()
     {
-        setLevel(this._level);
+        setWave(this._wave);
     }
-
-    public void completeLevel() 
-    {
-        //stop counting time and turn it into score then add to leaderboard
-
-        
-        
-        pauseTimer();
-        int score = LeaderBoardGateway.convertTimestampToScore(_currentTime);
-
-        Debug.Log("Level completed, score is: " + score);
-
-        // if single level then add to leaderboard for level
-        if (!GlobalEvents.FullPlaythroughInProgress.Invoked())
-        {
-            LeaderBoardGateway.SubmitScore(levelString(), GlobalReferences.PLAYER.Username, score);
-            GlobalReferences.initalLeaderboardIndex = this._level;
-            stopUpdating = true;
-            loadLeaderboard();
-            return;
-        }
-
-        //if full playthrough add to overall leaderboard
-
-        if (this._level == GlobalReferences.NUMBEROFLEVELS)
-        {
-            GlobalReferences.PLAYER.Score += score;
-            LeaderBoardGateway.SubmitScore("AnyPercent", GlobalReferences.PLAYER.Username, GlobalReferences.PLAYER.Score);
-            GlobalReferences.initalLeaderboardIndex = 0;
-            stopUpdating = true;
-            loadLeaderboard();
-            return;
-        }
-        incrementLevel(); 
-    }
-
-    public void pauseTimer() { _timerActive = false; }
-    public void unpauseTimer() {  _timerActive = true; }
-
-    public void resetTimer()
-    {
-        _currentTime = 0;
-        GlobalEvents.PlayerStartedMoving.uninvoke();
-    }
-
-    public bool isTimerPaused() { return !_timerActive; }
 
     public void loadMainMenu()
     {
-        UnloadLevel(() => 
+        UnloadWave(() => 
         { 
             SceneManager.LoadSceneAsync("MainMenu", mode: LoadSceneMode.Additive).completed+=(asyncOperation)=> 
             { 
@@ -205,28 +140,18 @@ public class LevelManager : MonoBehaviour
         });
     }
 
-
-    public void loadLeaderboard()
-    {
-        GlobalEvents.PlayerPause.invoke();
-        SceneManager.LoadSceneAsync(SceneNames.LEADERBOARD, mode: LoadSceneMode.Additive);
-    }
-
     private void togglePauseMenu()
     {
         if (GlobalEvents.PlayerPause.Invoked())
         {
             SceneManager.UnloadSceneAsync("PauseMenu").completed += (asyncOperation) => 
             {
-                if (GlobalEvents.PlayerStartedMoving.Invoked())
-                    unpauseTimer();
                 GlobalEvents.PlayerPause.uninvoke();
             };
 
         }
         else
         {
-            pauseTimer();
             SceneManager.LoadSceneAsync("PauseMenu", mode: LoadSceneMode.Additive).completed += (asyncOperation) => 
             { 
                 GlobalEvents.PlayerPause.invoke();
@@ -236,6 +161,6 @@ public class LevelManager : MonoBehaviour
 
     private string levelString()
     {
-        return "level" + this._level;
+        return "level" + this._wave;
     }
 }

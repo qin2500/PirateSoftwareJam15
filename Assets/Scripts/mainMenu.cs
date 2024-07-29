@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LootLocker.Requests;
 using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
@@ -36,14 +35,6 @@ public class mainMenu : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneNames.CREDITS, mode: LoadSceneMode.Additive).completed -= (asyncOperation) =>
         {
-            hideAssets();
-        };
-    }
-
-    public void loadLeaderBoard()
-    {
-        SceneManager.LoadSceneAsync(SceneNames.LEADERBOARD, mode: LoadSceneMode.Additive).completed += (asyncOperation) => 
-        { 
             hideAssets();
         };
     }
