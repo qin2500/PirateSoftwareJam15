@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, Damageable
 {
     private PlayerMovement playerMovement;
+    private Rigidbody2D rb;
     [Header("Health")]
     public int maxHealth = 5;
     public int curHealth;
@@ -28,6 +29,7 @@ public class PlayerHealth : MonoBehaviour, Damageable
     {
         playerMovement = GetComponent<PlayerMovement>();
         curHealth = maxHealth;
+        rb = GetComponent<Rigidbody2D>();
     }
     public void TakeDamage(int amount)
     {
@@ -53,11 +55,17 @@ public class PlayerHealth : MonoBehaviour, Damageable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if(collision.CompareTag("Enemy") && !isInvincible)
         {
-            //Debug.Log("AAAAAAAAAAAH Help");
+            Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+            knockbackDirection.y += 1;
+            //rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            playerMovement.setHitStunVelocity((knockbackDirection.normalized * knockbackForce));
+            playerMovement.setHitStun(true);
         }
     }
+    
+
 
     private IEnumerator InvincibilityCoroutine()
     {
