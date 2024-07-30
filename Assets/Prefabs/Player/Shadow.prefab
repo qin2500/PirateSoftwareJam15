@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 3223671456343477149}
   - component: {fileID: 753022926336150732}
   m_Layer: 7
-  m_Name: Particals
+  m_Name: Particles
   m_TagString: Shadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

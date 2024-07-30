@@ -177,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ExecuteJump()
     {
+        Debug.Log("Executing Jump");
         jumpEndedEarly = false;
         jumpTime = 0;
         canJumpBuffer = false;

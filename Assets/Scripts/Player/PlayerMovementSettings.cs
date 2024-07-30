@@ -22,7 +22,7 @@ public class PlayerMovementSettings : ScriptableObject
     public float maxFallSpeed = 40;
     public float fallAcceleration = 110f;
     public float jumpEndEarlyGravityModifier = 3;
-    public float coyoteTime = .15f;
+    public float coyoteTime = .8f;
     public float jumpBuffer = .2f;
 
     [Header("Shadow")]
