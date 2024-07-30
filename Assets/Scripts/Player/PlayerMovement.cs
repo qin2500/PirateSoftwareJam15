@@ -101,14 +101,9 @@ public class PlayerMovement : MonoBehaviour
         else if (isGrounded && !groundHit)
         {
             isGrounded = false;
-
             ungroundedTime = timeAC;
         }
 
-        //if(isGrounded)
-        //{
-        //    isInHitStun = false;
-        //}
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
     }
