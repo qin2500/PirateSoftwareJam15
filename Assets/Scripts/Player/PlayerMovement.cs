@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerMovementSettings settings;
     private Rigidbody2D rb;
-    private CapsuleCollider2D collider;
+    private new CapsuleCollider2D collider;
     private Vector2 curVelocity;
     private bool cachedQueryStartInColliders;
     private InputData inputData;
@@ -19,11 +20,15 @@ public class PlayerMovement : MonoBehaviour
     private bool coyoteOn;
     private bool jumpEndedEarly;
     private bool canJumpBuffer;
-    private bool jumping;
+    [SerializeField]private bool jumping;
     private float jumpTime;
     private float ungroundedTime = float.MinValue;
 
     //Swimming
+    private bool onShadow = false;
+    [SerializeField]private bool swimming;
+    [SerializeField]private bool shadowJump;
+    [HideInInspector]public event Action onDive;
 
     public struct InputData
     {
@@ -63,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckCollision();
 
-        jump();
+        shadow();
+        handleJump();
         movementHandler();
         gravity();
 
@@ -74,17 +80,19 @@ public class PlayerMovement : MonoBehaviour
     {
 
         Physics2D.queriesStartInColliders = false;
-        bool groundHit = Physics2D.CapsuleCast(collider.bounds.center, collider.size, collider.direction, 0, Vector2.down, settings.groundedDistance, settings.GoundLayer);
+        
         bool ceilingHit = Physics2D.CapsuleCast(collider.bounds.center, collider.size, collider.direction, 0, Vector2.up, settings.groundedDistance, settings.GoundLayer); ;
-
         if (ceilingHit) curVelocity.y = Math.Min(0, curVelocity.y);
 
-        if(!isGrounded && groundHit)
+        RaycastHit2D groundHit = Physics2D.CapsuleCast(collider.bounds.center, collider.size, collider.direction, 0, Vector2.down, settings.groundedDistance, settings.GoundLayer);
+
+        if (!isGrounded && groundHit)
         {
             isGrounded = true;
             coyoteOn = true;
             canJumpBuffer = true;
             jumpEndedEarly = false;
+            shadowJump = false;
         }
         else if (isGrounded && !groundHit)
         {
@@ -93,6 +101,32 @@ public class PlayerMovement : MonoBehaviour
         }
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.transform.CompareTag("Shadow"))
+        {
+            onShadow = true;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.transform.CompareTag("Shadow"))
+        {
+            onShadow = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.transform.CompareTag("Shadow"))
+        {
+            onShadow = false;
+        }
     }
 
     private void movementHandler()
@@ -105,6 +139,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             curVelocity.x = Mathf.MoveTowards(curVelocity.x, inputData.horizonatal * settings.maxSpeed, settings.acceleration * Time.fixedDeltaTime);
+            if (swimming)
+               curVelocity.x = Mathf.MoveTowards(curVelocity.x, inputData.horizonatal * settings.swimSpeed, settings.acceleration * Time.fixedDeltaTime);
+            else if(shadowJump)
+                curVelocity.x = Mathf.MoveTowards(curVelocity.x, inputData.horizonatal * settings.maxSpeed * 0.1f, settings.shadowJumpHorizontalAcceleration * Time.fixedDeltaTime);
         }
     }
     private void gravity()
@@ -122,9 +160,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void jump()
+    private void handleJump()
     {
-        if (!jumpEndedEarly && !isGrounded && !inputData.jumpHeld && rb.velocity.y > 0) jumpEndedEarly = true;
+        if (!jumpEndedEarly && !isGrounded && !inputData.jumpHeld && rb.velocity.y > 0 && !shadowJump) jumpEndedEarly = true;
 
         if (!jumping && !(canJumpBuffer && timeAC < jumpTime + settings.jumpBuffer)) return;
 
@@ -139,6 +177,54 @@ public class PlayerMovement : MonoBehaviour
         jumpTime = 0;
         canJumpBuffer = false;
         coyoteOn = false;
-        curVelocity.y = settings.jumpPower;
+
+        if (swimming)
+        {
+            swimming = false;
+            shadowJump = true;
+        }
+        
+
+        if (!shadowJump)
+            curVelocity.y = settings.jumpPower;
+        else
+        {
+            curVelocity.y = settings.shadowJumpPower;
+        }
+        
+    }
+
+    private void shadow()
+    {
+        if(inputData.vertical < 0 && onShadow)
+        {
+            swimming = true;
+            onShadow = false;
+            onDive.Invoke();
+        }
+    }
+    public void jump()
+    {
+        jumping = true;
+    }
+
+    public bool getSwimming()
+    {
+        return swimming;
+    }
+
+    public Vector2 getCurVelocity()
+    {
+        return curVelocity;
+    }
+
+    public bool getIsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public void setSwimming(bool value)
+    {
+        swimming = value;
     }
 }

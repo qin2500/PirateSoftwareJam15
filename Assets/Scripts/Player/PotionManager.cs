@@ -9,6 +9,9 @@ public class PotionManager : MonoBehaviour
     private Queue<GameObject> alchemyPotionPool;
     private Rigidbody2D rb;
     [SerializeField] private GameObject throwOrigin;
+    [SerializeField] private GameObject shadow;
+    [SerializeField] private float shadowPuddleLife;
+    private PlayerMovement playerMovement;
     private int cooldown = 10;
     private const int defaultCooldown = 10;
 
@@ -21,10 +24,14 @@ public class PotionManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("Initializing potion manager");
-        for (int i = 0; i < 20 ; i++)
+        for (int i = 0; i < 5; i++)
         {
             GameObject potion = Instantiate(shadowPotion);
             potion.transform.parent = transform;
+            potion.GetComponent<ShadowPotionController>().setPotionManager(this);
+            potion.GetComponent<ShadowPotionController>().setShadow(shadow);
+            potion.GetComponent<ShadowPotionController>().playerMovement = playerMovement;
+            potion.GetComponent<ShadowPotionController>().setLifeTime(shadowPuddleLife);
             potion.SetActive(false);
             shadowPotionPool.Enqueue(potion);
         }
@@ -59,8 +66,6 @@ public class PotionManager : MonoBehaviour
                 potion.transform.position = throwOrigin.transform.position;
                 potion.transform.rotation = rotation;
 
-                
-
             }
             else
             {
@@ -76,5 +81,11 @@ public class PotionManager : MonoBehaviour
     {
         potion.SetActive(false);
         shadowPotionPool.Enqueue(potion);
+    }
+
+    public void addToPool(GameObject potion)
+    {
+        potion.SetActive(false);
+        shadowPotionPool.Enqueue(potion); //TODO: Specify pool
     }
 }

@@ -9,31 +9,18 @@ public class mainMenu : MonoBehaviour
 
     [SerializeField] GameObject canvas;
 
-    GameObject currentlyActive;
-
     public void Play()
     {
-        GlobalEvents.FullPlaythroughInProgress.invoke();
-        SceneManager.LoadSceneAsync("NameSelector", mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+        SceneManager.LoadSceneAsync(SceneNames.LEVELCONTROLLER, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
         {
             hideAssets();
         };
         
     }
 
-    public void levelSelector()
-    {
-        GlobalEvents.FullPlaythroughInProgress.uninvoke();
-        SceneManager.LoadSceneAsync("NameSelector", mode: LoadSceneMode.Additive).completed += (asyncOperation) => 
-        { 
-            hideAssets();
-        };
-
-    }
-
     public void loadCredits()
     {
-        SceneManager.LoadSceneAsync(SceneNames.CREDITS, mode: LoadSceneMode.Additive).completed -= (asyncOperation) =>
+        SceneManager.LoadSceneAsync(SceneNames.CREDITS, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
         {
             hideAssets();
         };

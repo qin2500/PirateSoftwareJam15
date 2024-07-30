@@ -8,6 +8,9 @@ using UnityEngine;
 public class AlchemyUpgrade
 {
     private HashSet<Element> elements;
+    private Effect effect;
+
+    public Effect Effect { get { return effect; } } 
     
     public override string ToString()
     {
@@ -43,6 +46,21 @@ public class AlchemyUpgrade
         return false;
 
     }
+
+    public void applyEffect(LightBulletController potion)
+    {
+        if (effect is PlayerEffect)
+        {
+            PlayerEffect playerEffect = (PlayerEffect)effect;
+
+            playerEffect.tryApply(GlobalReferences.PLAYER);
+        } else
+        {
+            PotionEffect potionEffect = (PotionEffect)effect;
+
+            potionEffect.effectFunction(potion);
+        }
+    }
 }
 
 public enum Element
@@ -55,6 +73,16 @@ public enum Element
 public static class AlchemyUpgradeFactory
 {
 
+}
+
+public static class EffectFactory
+{
+    public static Effect from(Element element1, Element? element2)
+    {
+        //TODO: Fill in
+
+        return new Effect();
+    }
 }
 
 public enum EffectType
@@ -100,7 +128,7 @@ public class PlayerEffect: Effect
 public class PotionEffect:Effect
 {
         public string name;
-        public Action<ShadowPotionController> effectFunction;
+        public Action<LightBulletController> effectFunction;
 }
 
 public class Pentagram
@@ -121,5 +149,13 @@ public class Pentagram
     public override string ToString()
     {
         return upgrades.ToString();
+    }
+
+    public void applyEffects()
+    {
+        foreach (var upgrade in upgrades)
+        {
+            applyEffects();
+        }
     }
 }

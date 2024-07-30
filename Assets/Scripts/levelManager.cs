@@ -36,6 +36,12 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (stopUpdating) return;
+
+        if (GlobalReferences.PLAYER.Exp > GlobalReferences.LEVELEXP)
+        {
+
+
+        }
         if (GlobalEvents.PlayerStartedMoving.Invoked() && !GlobalEvents.PlayerPause.Invoked())
         {
             //will probably signal wave to start/resume
@@ -95,7 +101,6 @@ public class LevelManager : MonoBehaviour
                 SceneManager.LoadSceneAsync("Player Controller", mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
                 {
                     Debug.Log("Loaded wave: " + this._wave);
-
 
                     waveCounter.text = "Wave " + this._wave;
                 };
@@ -157,6 +162,14 @@ public class LevelManager : MonoBehaviour
                 GlobalEvents.PlayerPause.invoke();
             };
         }
+    }
+
+    private void displayUpgradeMenu()
+    {
+        SceneManager.LoadSceneAsync(SceneNames.UPGRADEMENU, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+        {
+            GlobalEvents.PlayerPause.invoke();
+        };
     }
 
     private string levelString()
