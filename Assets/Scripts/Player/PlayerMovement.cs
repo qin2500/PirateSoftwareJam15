@@ -11,9 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private new CapsuleCollider2D collider;
     private Vector2 curVelocity;
+    private Vector2 hitStunVelocity;
     private bool cachedQueryStartInColliders;
     private InputData inputData;
     private float timeAC;
+    private bool isInHitStun;
 
     //Jumping
     private bool isGrounded;
@@ -73,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
         movementHandler();
         gravity();
 
-        rb.velocity = curVelocity;
+        if(isInHitStun)rb.velocity = curVelocity + hitStunVelocity;
+        else rb.velocity = curVelocity;
     }
 
     private void CheckCollision()
@@ -93,12 +96,14 @@ public class PlayerMovement : MonoBehaviour
             canJumpBuffer = true;
             jumpEndedEarly = false;
             shadowJump = false;
+            isInHitStun = false;
         }
         else if (isGrounded && !groundHit)
         {
             isGrounded = false;
             ungroundedTime = timeAC;
         }
+
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
     }
@@ -226,5 +231,14 @@ public class PlayerMovement : MonoBehaviour
     public void setSwimming(bool value)
     {
         swimming = value;
+    }
+
+    public void setHitStunVelocity(Vector2 val)
+    {
+        this.hitStunVelocity = val;
+    }
+    public void setHitStun(bool val)
+    {
+        this.isInHitStun = val;
     }
 }

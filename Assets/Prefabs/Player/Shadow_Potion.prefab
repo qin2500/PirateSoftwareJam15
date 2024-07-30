@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2687106025791754170}
   - component: {fileID: 5359771359501821632}
   m_Layer: 8
-  m_Name: Potion
+  m_Name: Shadow_Potion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 128
+  shadow: {fileID: 581028809232212418, guid: 97896b85efded5946b6bb1564d3e199f, type: 3}
   playerMovement: {fileID: 0}
   velocity: 500
 --- !u!50 &5359771359501821632

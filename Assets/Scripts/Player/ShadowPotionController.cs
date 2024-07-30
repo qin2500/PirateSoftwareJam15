@@ -9,7 +9,7 @@ public class ShadowPotionController : MonoBehaviour
     private Rigidbody2D rb;
     public LayerMask ground;
     private PotionManager manager;
-    private GameObject shadow;
+    [SerializeField]private GameObject shadow;
     public PlayerMovement playerMovement;
     [SerializeField] private float velocity = 500f;
     private float lifeTime;
