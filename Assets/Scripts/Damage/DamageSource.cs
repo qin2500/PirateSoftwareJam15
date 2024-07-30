@@ -10,6 +10,16 @@ public class DamageSource : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<PlayerHealth>().knockBack(transform);
+            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
+            
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().knockBack(transform);
             collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
         }
     }

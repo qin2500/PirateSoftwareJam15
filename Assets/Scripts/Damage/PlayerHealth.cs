@@ -23,6 +23,9 @@ public class PlayerHealth : MonoBehaviour, Damageable
     [SerializeField] private float knockbackForce;
     private bool isInvincible;
     [SerializeField] private Animator damageEffectAnimator;
+    [SerializeField] CameraShakeController cameraShakeController;
+    [SerializeField] float camShakeAmplitude = 2;
+    [SerializeField] float camShakeDuration = 0.5f;
     public event Action onDamage;
 
     public void Awake()
@@ -33,32 +36,29 @@ public class PlayerHealth : MonoBehaviour, Damageable
     }
     public void TakeDamage(int amount)
     {
-        if(isInvincible && playerMovement.getSwimming())
+        if(isInvincible || playerMovement.getSwimming())
         {
             return;
         }
         curHealth -= amount;
-        onDamage.Invoke();
+        StartCoroutine(InvincibilityCoroutine());
+        cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration   );
         if (curHealth <= 0)
         {
             death();
-        }
-        else
-        {
-            StartCoroutine(InvincibilityCoroutine());
         }
     }
     public void heal(int amount)
     {
         curHealth = Mathf.Max(maxHealth, curHealth + amount);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void knockBack(Transform trans)
     {
-        if(collision.CompareTag("Enemy") && !isInvincible)
+        if (!isInvincible)
         {
-            Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
-            knockbackDirection.y += 1;
+            Vector2 knockbackDirection = (transform.position - trans.position).normalized;
+            Debug.Log(knockbackDirection);
+            knockbackDirection.y += 2;
             //rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
             playerMovement.setHitStunVelocity((knockbackDirection.normalized * knockbackForce));
             playerMovement.setHitStun(true);
@@ -72,10 +72,10 @@ public class PlayerHealth : MonoBehaviour, Damageable
         isInvincible = true;
         if (damageEffectAnimator != null)
         {
-            damageEffectAnimator.Play("IFrames");
+            damageEffectAnimator.Play("Invincible");
         }
         yield return new WaitForSeconds(iFrames);
-        damageEffectAnimator.StopPlayback();
+        damageEffectAnimator.Play("Nothing");
         isInvincible = false;
     }
 
