@@ -48,10 +48,13 @@ public class ShadowPotionController : MonoBehaviour
                     GameObject spawnedShadow = Instantiate(shadow);
                     spawnedShadow.transform.position = contact.point;
                     spawnedShadow.GetComponent<ShadowPuddleController>().setLifeTime(lifeTime);
+                    spawnedShadow.GetComponent<ShadowPuddleController>().onDie += backToThePool;
+
+                    gameObject.SetActive(false);
 
                     rb.velocity = Vector2.zero;
                     rb.angularVelocity = 0f;
-                    manager.addToPool(gameObject);
+                    
                 }
                 //Bottem Collision
                 else if (angle > 135)
@@ -63,6 +66,11 @@ public class ShadowPotionController : MonoBehaviour
             }
 
         }
+    }
+    public void backToThePool()
+    {
+        Debug.Log("POOOO");
+        manager.addToPool(gameObject);
     }
 
     public void setInitialVelocity(float newVelocity)

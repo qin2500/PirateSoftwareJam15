@@ -5,6 +5,8 @@ using UnityEngine;
 public class PotionManager : MonoBehaviour
 {
     [SerializeField] private GameObject shadowPotion;
+    public int maxAmmo = 3;
+    public int curAmmo = 3;
     private Queue<GameObject> shadowPotionPool;
     private Queue<GameObject> alchemyPotionPool;
     private Rigidbody2D rb;
@@ -13,7 +15,6 @@ public class PotionManager : MonoBehaviour
     [SerializeField] private float shadowPuddleLife;
     private PlayerMovement playerMovement;
     private int cooldown = 10;
-    private const int defaultCooldown = 10;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class PotionManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("Initializing potion manager");
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < maxAmmo; i++)
         {
             GameObject potion = Instantiate(shadowPotion);
             potion.transform.parent = transform;
@@ -48,11 +49,11 @@ public class PotionManager : MonoBehaviour
         
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Right mouse button clicked");
 
             if (shadowPotionPool.Count > 0)
             {
                 GameObject potion = shadowPotionPool.Dequeue();
+                curAmmo = shadowPotionPool.Count;
                 potion.GetComponent<ShadowPotionController>().setInitialVelocity(10 + rb.velocity.magnitude * 0.5f);
                 potion.SetActive(true);
 
@@ -65,6 +66,7 @@ public class PotionManager : MonoBehaviour
 
                 potion.transform.position = throwOrigin.transform.position;
                 potion.transform.rotation = rotation;
+
 
             }
             else
