@@ -15,6 +15,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float knockbackForce;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float rayLength = 0.5f;
 
     private Rigidbody2D rb;
     private Vector2 curVelocity;
@@ -74,7 +75,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, curVelocity.normalized, 0.5f, ground);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, curVelocity.normalized, rayLength, ground);
         if(hit.collider != null)Debug.Log(hit.collider.gameObject.name);
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
