@@ -158,9 +158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a2cdd6cf98cd14f95a52bbb1e2c104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aoeParticleEffect: {fileID: 2669113163075602650, guid: 5aac2a9d24b9f98429bf13a93b5189f4, type: 3}
+  aoeParticleEffect: {fileID: 2669113163075602650, guid: db7c04789b7b44949828e373e9de19ef, type: 3}
   particleOrigin: {fileID: 1141172384511153322}
-  radius: 0
+  radius: 1000
+  knockbackForce: 0
+  burnEnemies: 0
   timeToDisable: 0
 --- !u!70 &8248990407344661626
 CapsuleCollider2D:

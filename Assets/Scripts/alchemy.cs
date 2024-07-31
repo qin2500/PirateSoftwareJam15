@@ -87,7 +87,14 @@ public enum Element
 public static class EffectFactory
 {
     public static Effect FIRE_EFFECT = new PlayerEffect("Boosted attack speed", player => player.potionCooldown -= 2);
-    public static Effect WATER_EFFECT = new PlayerEffect("Boosted attack speed", player => player.potionCooldown -= 2);
+    public static Effect WATER_EFFECT = new PotionEffect("Boosted aoe", potion => potion.radius *= (float) 1.2);
+    public static Effect GRASS_EFFECT = new PotionEffect("Boosted knockback", potion => potion.knockbackForce *= (float)1.2);
+    public static Effect FIRE_FIRE_EFFECT = new PotionEffect("Burn Damage", potion => potion.burnEnemies = true);
+    public static Effect WATER_WATER_EFFECT = new PotionEffect("Bounce off enemies", potion => potion.chainBounce = true);
+    public static Effect GRASS_GRASS_EFFECT = new PotionEffect("Enemies drop healing items on hit", potion => potion.healOnHit = true);
+    public static Effect FIRE_WATER_EFFECT = new PotionEffect("Smoke cloud on enemy death", potion => potion.smokeOnDeath = true);
+    public static Effect FIRE_GRASS_EFFECT = new PotionEffect("Enemy explodes on death", potion => potion.explodeOnDeath = true);
+    public static Effect WATER_GRASS_EFFECT = new PotionEffect("Enemy slows on hit", potion => potion.slowFrames = 5);
 
 }
 
@@ -135,6 +142,12 @@ public class PotionEffect:Effect
 {
         public string name;
         public Action<LightBulletController> effectFunction;
+
+    public PotionEffect(string name, Action<LightBulletController> effectFunction)
+    {
+        this.name = name;
+        this.effectFunction = effectFunction;
+    }       
 }
 
 public class Pentagram

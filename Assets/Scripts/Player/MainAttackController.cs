@@ -11,7 +11,7 @@ public class MainAttackController : MonoBehaviour
     [SerializeField] private GameObject lightBullet;
     [SerializeField] private GameObject bulletOrigin;
     [SerializeField] private int damage;
-    private int cooldown = GlobalReferences.PLAYER.potionCooldown;
+    private int cooldown = 0;
 
     private Queue<GameObject> potionPool;
 
@@ -41,8 +41,6 @@ public class MainAttackController : MonoBehaviour
     {
         if (cooldown > 0)
             return;
-        
-        cooldown = GlobalReferences.PLAYER.potionCooldown;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -82,6 +80,7 @@ public class MainAttackController : MonoBehaviour
                     Debug.LogWarning("No grenades available in the pool.");
                 }
             }
+            cooldown = GlobalReferences.PLAYER.potionCooldown;
         }
     }
 

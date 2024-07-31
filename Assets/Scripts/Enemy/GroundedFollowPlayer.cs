@@ -17,6 +17,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     private Vector2 curVelocity;
     private int playerDir = 0;
     private EnemyHealth enemyHealth;
+    private int slowFrames;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,8 @@ public class GroundedFollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (slowFrames > 0) return;
+
         if (!player) player = GlobalReferences.PLAYER.PlayerObject;
         if(playerDir != 0)spriteRenderer.flipX = playerDir == -1;
         if(player)
@@ -49,6 +52,12 @@ public class GroundedFollowPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (slowFrames > 0)
+        {
+            slowFrames--;
+            return;
+        }
+
         //Movement
         if (playerDir == 0)
         {
@@ -62,5 +71,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         curVelocity.y = rb.velocity.y;
 
         rb.velocity = curVelocity;
+
+        slowFrames = enemyHealth.slowFrames;
     }
 }
