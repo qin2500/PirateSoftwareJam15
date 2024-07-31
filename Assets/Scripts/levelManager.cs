@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
 
     private bool stopUpdating = false;
 
+    public int enemyCredits = 20;
+
 
     private void Awake()
     {
@@ -122,10 +124,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Unloading wave: " + this._wave);
             SceneManager.UnloadSceneAsync("wave " + this._wave).completed += (asyncOperation) =>
             {
-                SceneManager.UnloadSceneAsync("Player Controller").completed += (asyncOperation) =>
-                {
-                    callback();
-                };
+               callback();
             };
         } else
         {
@@ -185,7 +184,7 @@ public class LevelManager : MonoBehaviour
 
     private void loadArena()
     {
-        SceneManager.LoadSceneAsync(SceneNames.ARENA, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+        SceneManager.LoadSceneAsync(SceneNames.STAGE, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
         {
             SceneManager.LoadSceneAsync(SceneNames.PLAYERCONTROLLER, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
             {
