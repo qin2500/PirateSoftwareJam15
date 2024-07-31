@@ -12,27 +12,16 @@ public class ShadowPotionHUD : MonoBehaviour
 
     public GameObject shadowBottle;
     public GameObject emptyBottle;
-    private Animator animator; 
-    private int tick;
 
     private GameObject[] shadowBottles ;
     private GameObject[] emptyBottles;
 
     void Start(){
-       animator = GetComponent<Animator>();
+      
        InitializePotions();
-       tick = 0;
+
        potions.onNumPotionChange += UpdatePotions;
     }
-    void Update(){
-
-        if (tick == 666){
-            tick = 0;
-        }
-        tick++;
-
-    }
-
  
     void InitializePotions()
     {

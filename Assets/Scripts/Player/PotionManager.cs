@@ -53,13 +53,14 @@ public class PotionManager : MonoBehaviour
         {
 
             if (shadowPotionPool.Count > 0)
-            {
+            {   
+                
                 GameObject potion = shadowPotionPool.Dequeue();
-                onNumPotionChange.Invoke();
+                
                 curAmmo = shadowPotionPool.Count;
                 potion.GetComponent<ShadowPotionController>().setInitialVelocity(10 + rb.velocity.magnitude * 0.5f);
                 potion.SetActive(true);
-
+                onNumPotionChange.Invoke();
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 direction = mousePosition - throwOrigin.transform.position;
                 direction.z = 0; 
@@ -84,8 +85,9 @@ public class PotionManager : MonoBehaviour
 
     public void addToPool(GameObject potion)
     {   
-        onNumPotionChange.Invoke();
+        
         potion.SetActive(false);
         shadowPotionPool.Enqueue(potion); //TODO: Specify pool
+        onNumPotionChange.Invoke();
     }
 }
