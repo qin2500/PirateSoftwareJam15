@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour, Damageable
     }
     public void knockBack(Transform trans)
     {
-        if (!isInvincible)
+        if (!isInvincible && !playerMovement.getSwimming())
         {
             Vector2 knockbackDirection = (transform.position - trans.position).normalized;
             knockbackDirection.y += 2;

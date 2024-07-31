@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,14 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int exp;
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private float jumpForce;
 
     private Rigidbody2D rb;
     private Vector2 curVelocity;
     private int playerDir = 0;
     private EnemyHealth enemyHealth;
+    private bool cachedQueryStartInColliders;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyHealth= GetComponent<EnemyHealth>();
         enemyHealth.exp = exp;
+        cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
     // Update is called once per frame
@@ -56,6 +61,13 @@ public class GroundedFollowPlayer : MonoBehaviour
         {
             curVelocity.x = Mathf.MoveTowards(curVelocity.x, playerDir * maxSpeed, acceleration * Time.fixedDeltaTime);
         }
+
+        Physics2D.queriesStartInColliders = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, curVelocity.normalized, 0.5f, ground);
+        if(hit.collider != null)Debug.Log(hit.collider.gameObject.name);
+        Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
+
+        if (hit)rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
         curVelocity.y = rb.velocity.y;
 

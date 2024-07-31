@@ -17,6 +17,7 @@ public class EnemyHealth : MonoBehaviour, Damageable
     [SerializeField] Animator spriteAnimator;
     [SerializeField] Collider2D damageCollider;
     [SerializeField] ParticleSystem particleSystem;
+     
     public void Awake()
     {
         curHealth = maxHealth;
