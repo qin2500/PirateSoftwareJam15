@@ -8,4 +8,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: d5544ec823f45364c857adc2a4d34b35
+  - enabled: 1
+    path: Assets/Scenes/Arena.unity
+    guid: 91a4f68e6350b2e4c86d032c2497a577
+  - enabled: 1
+    path: Assets/Scenes/LevelController.unity
+    guid: 1a568601d19243f42b44341290bf4e5a
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: c269355c2255d7b419d54a843c15a9ec
+  - enabled: 1
+    path: Assets/Scenes/PlayerController.unity
+    guid: 137b5962cd66a24489eb6c18b27fc09e
+  - enabled: 1
+    path: Assets/Scenes/PlayerMovement.unity
+    guid: e436e448125b09544aa8dec5b2163379
+  - enabled: 1
+    path: Assets/Scenes/UpgradeMenu.unity
+    guid: d01de8c71945b234895d43cf76da4d46
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 5e2f5d8532d2bfe45957d1a85b87a919
   m_configObjects: {}

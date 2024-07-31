@@ -10,6 +10,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float maxSpeed;
     [SerializeField] private float deceleration;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private int exp;
 
     private Rigidbody2D rb;
     private Vector2 curVelocity;
@@ -21,11 +22,13 @@ public class GroundedFollowPlayer : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         enemyHealth= GetComponent<EnemyHealth>();
+        enemyHealth.exp = exp;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!player) player = GlobalReferences.PLAYER.PlayerObject;
         if(playerDir != 0)spriteRenderer.flipX = playerDir == -1;
         if(player)
         {

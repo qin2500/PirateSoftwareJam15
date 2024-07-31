@@ -41,6 +41,7 @@ public class LightBulletController : MonoBehaviour
         else if(collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
+            GlobalReferences.PLAYER.Pentagram.applyEffects(this);
 
             killBullet();
         }

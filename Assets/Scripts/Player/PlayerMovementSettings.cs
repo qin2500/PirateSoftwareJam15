@@ -26,8 +26,8 @@ public class PlayerMovementSettings : ScriptableObject
     public float jumpBuffer = .2f;
 
     [Header("Shadow")]
-    public float swimSpeed = 18;
-    public float shadowJumpPower = 42;
+    public float swimSpeed = 25;
+    public float shadowJumpPower = 32;
     public float shadowJumpHorizontalAcceleration = 60;
 
 }
