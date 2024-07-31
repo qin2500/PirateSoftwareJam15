@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, Damageable
@@ -26,7 +27,8 @@ public class PlayerHealth : MonoBehaviour, Damageable
     [SerializeField] CameraShakeController cameraShakeController;
     [SerializeField] float camShakeAmplitude = 2;
     [SerializeField] float camShakeDuration = 0.5f;
-    public event Action onDamage;
+    public event Action onHealthChanged;
+    
 
     public void Awake()
     {
@@ -43,6 +45,7 @@ public class PlayerHealth : MonoBehaviour, Damageable
             return;
         }
         curHealth -= amount;
+        onHealthChanged.Invoke();
         StartCoroutine(InvincibilityCoroutine());
         if (cameraShakeController) cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration);
         if (curHealth <= 0)
@@ -50,9 +53,11 @@ public class PlayerHealth : MonoBehaviour, Damageable
             Debug.Log("Should die");
             death();
         }
+        
     }
     public void heal(int amount)
-    {
+    {   
+        onHealthChanged.Invoke();
         curHealth = Mathf.Max(maxHealth, curHealth + amount);
     }
     public void knockBack(Transform trans)
@@ -99,4 +104,6 @@ public class PlayerHealth : MonoBehaviour, Damageable
             else Instantiate(deathEffect, particleOrigin.transform.position, Quaternion.identity);
         }
     }
+
+
 }
