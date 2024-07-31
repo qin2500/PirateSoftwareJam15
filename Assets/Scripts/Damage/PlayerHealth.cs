@@ -37,7 +37,6 @@ public class PlayerHealth : MonoBehaviour, Damageable
     }
     public void TakeDamage(int amount)
     {
-        Debug.Log("Took damage");
         if (!cameraShakeController) cameraShakeController = GlobalReferences.SHAKECONTROLLER;
         if(isInvincible || playerMovement.getSwimming())
         {
@@ -61,7 +60,6 @@ public class PlayerHealth : MonoBehaviour, Damageable
         if (!isInvincible)
         {
             Vector2 knockbackDirection = (transform.position - trans.position).normalized;
-            Debug.Log(knockbackDirection);
             knockbackDirection.y += 2;
             //rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
             playerMovement.setHitStunVelocity((knockbackDirection.normalized * knockbackForce));
