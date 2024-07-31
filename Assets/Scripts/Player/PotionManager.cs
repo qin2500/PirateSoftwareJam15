@@ -6,6 +6,7 @@ using System;
 public class PotionManager : MonoBehaviour
 {
     [SerializeField] private GameObject shadowPotion;
+    [SerializeField] public AudioClip shadowPotionCrashClip;
     public int maxAmmo = 3;
     public int curAmmo = 3;
     private Queue<GameObject> shadowPotionPool;
@@ -61,6 +62,7 @@ public class PotionManager : MonoBehaviour
                 potion.GetComponent<ShadowPotionController>().setInitialVelocity(10 + rb.velocity.magnitude * 0.5f);
                 potion.SetActive(true);
                 onNumPotionChange.Invoke();
+
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 direction = mousePosition - throwOrigin.transform.position;
                 direction.z = 0; 
@@ -70,6 +72,7 @@ public class PotionManager : MonoBehaviour
 
                 potion.transform.position = throwOrigin.transform.position;
                 potion.transform.rotation = rotation;
+                
 
 
             }

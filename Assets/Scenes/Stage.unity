@@ -37983,13 +37983,21 @@ MonoBehaviour:
   maxHealth: 5
   curHealth: 0
   exp: 0
+  knockbackForce: 0
   isDead: 0
   deathDelay: 2
   deathEffect: {fileID: 2669113163075602650, guid: 5aac2a9d24b9f98429bf13a93b5189f4, type: 3}
   particleOrigin: {fileID: 0}
   spriteAnimator: {fileID: 1217942665}
   damageCollider: {fileID: 1653226373}
+  burnParticleEffect: {fileID: 0}
+  smokeCloud: {fileID: 0}
+  explosion: {fileID: 0}
   particleSystem: {fileID: 0}
+  burnTicker: 0
+  smokeOnDeath: 0
+  explodeOnDeath: 0
+  slowFrames: 0
 --- !u!114 &1217942669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38008,6 +38016,7 @@ MonoBehaviour:
   deceleration: 100
   spriteRenderer: {fileID: 1653226374}
   exp: 0
+  knockbackForce: 0
   ground:
     serializedVersion: 2
     m_Bits: 128
@@ -38163,6 +38172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadowPotion: {fileID: 5768674368919904295, guid: 75584c1b9e43591419cc08ac0f07a21f, type: 3}
+  shadowPotionCrashClip: {fileID: 8300000, guid: cca0bb1fb45b4884e85b81bec01a9c8e, type: 3}
   maxAmmo: 3
   curAmmo: 3
   throwOrigin: {fileID: 686460017}
@@ -38194,6 +38204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906b500c8f15b08489433b66f1d34f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightPotionCrash: {fileID: 8300000, guid: cca0bb1fb45b4884e85b81bec01a9c8e, type: 3}
+  potionThrowClip: {fileID: 8300000, guid: 7a70a5cc7c2881d4693e31376f3fd831, type: 3}
   potionPoolSize: 10
   throwPower: 20
   timeToDisableBullet: 1
@@ -38299,7 +38311,7 @@ MonoBehaviour:
   acceleration: 120
   maxSpeed: 3
   deceleration: 100
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 395613570}
   exp: 0
   knockbackForce: 0
   ground:
@@ -43516,7 +43528,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8294076418942480345, guid: 8559c544fe4235941bac579b674731be, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 8c2734b3690bdde4391625d6f24924af, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3b784d6be14c1524182bc287e008f209, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -44804,6 +44816,10 @@ PrefabInstance:
       propertyPath: ground.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 6279425584375495888, guid: 0359213c166e0664ab4752731cbfed9c, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 395613570}
     - target: {fileID: 8508959138003171937, guid: 0359213c166e0664ab4752731cbfed9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.02
@@ -44865,4 +44881,3 @@ SceneRoots:
   - {fileID: 1567875952}
   - {fileID: 1026293130}
   - {fileID: 1446406723}
-  - {fileID: 1247198899}

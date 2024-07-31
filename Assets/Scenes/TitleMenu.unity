@@ -2548,14 +2548,14 @@ RectTransform:
   m_GameObject: {fileID: 1251807400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6667755, y: 1.6667755, z: 1.6667755}
+  m_LocalScale: {x: 1.1069056, y: 1.1069056, z: 1.1069056}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1568972476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 180.7, y: 22.5}
+  m_AnchoredPosition: {x: 2, y: 34}
   m_SizeDelta: {x: 543.071, y: 135.7677}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1251807402
@@ -2578,7 +2578,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shadowheart
+  m_text: 'Little Shadow Alchemist
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dd6347446665dbb4cbbca5bb83fd2bc2, type: 2}
   m_sharedMaterial: {fileID: 3251659234163209916, guid: dd6347446665dbb4cbbca5bb83fd2bc2, type: 2}
