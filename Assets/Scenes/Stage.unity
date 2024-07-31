@@ -38313,6 +38313,7 @@ MonoBehaviour:
   deceleration: 100
   spriteRenderer: {fileID: 395613570}
   exp: 0
+  knockbackForce: 0
   ground:
     serializedVersion: 2
     m_Bits: 128
@@ -44804,6 +44805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5716673986438738442, guid: 0359213c166e0664ab4752731cbfed9c, type: 3}
+      propertyPath: particleSystem
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6279425584375495888, guid: 0359213c166e0664ab4752731cbfed9c, type: 3}
       propertyPath: player
       value: 
@@ -44872,7 +44877,6 @@ SceneRoots:
   - {fileID: 1870544490}
   - {fileID: 635096487}
   - {fileID: 1228687583}
-  - {fileID: 1247198899}
   - {fileID: 1217942670}
   - {fileID: 3916237456314706131}
   - {fileID: 1109055856}

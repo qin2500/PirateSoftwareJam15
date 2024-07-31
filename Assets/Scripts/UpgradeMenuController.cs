@@ -6,19 +6,19 @@ using UnityEngine.SceneManagement;
 public class UpgradeMenuController : MonoBehaviour
 {
 
-    void addFireElement()
+    public void addFireElement()
     {
         GlobalReferences.PLAYER.Pentagram.addUpgrade(AlchemyUpgrade.from(Element.Fire, null));
         returnToGame();
     }
 
-    void addWaterElement()
+    public void addWaterElement()
     {
         GlobalReferences.PLAYER.Pentagram.addUpgrade(AlchemyUpgrade.from(Element.Water, null));
         returnToGame();
     }
 
-    void addGrassElement()
+    public void addGrassElement()
     {
         GlobalReferences.PLAYER.Pentagram.addUpgrade(AlchemyUpgrade.from(Element.Grass, null));
         returnToGame();
