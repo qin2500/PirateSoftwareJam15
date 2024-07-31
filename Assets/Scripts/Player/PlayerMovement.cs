@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerMovement : MonoBehaviour
-{
+{   
+    [SerializeField] public AudioClip jumpClip;
     [SerializeField] private PlayerMovementSettings settings;
     private Rigidbody2D rb;
     private new CapsuleCollider2D collider;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         };
         if (inputData.jumpPressed)
         {
+            SoundFXManager.instance.PlaySoundFXClip(jumpClip, transform, 1f);
             jumping = true;
             jumpTime = timeAC;
         }

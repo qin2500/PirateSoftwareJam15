@@ -80,5 +80,10 @@ public class GroundedFollowPlayer : MonoBehaviour
 
         rb.velocity = curVelocity;
     }
+
+    public int getPlayerDir()
+    {
+        return playerDir;
+    }
 }
 

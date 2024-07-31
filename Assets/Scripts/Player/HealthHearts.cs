@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class HealthHearts : MonoBehaviour
 {
     public PlayerHealth health;
+    [SerializeField] public AudioClip playerDamagedClip;
 
     public GameObject heart;
     public GameObject emptyHeart;
@@ -49,6 +50,8 @@ public class HealthHearts : MonoBehaviour
 
     void UpdateHearts()
     {
+        SoundFXManager.instance.PlaySoundFXClip(playerDamagedClip, transform, 1f);
+
         for (int i = 0; i < health.maxHealth; i++)
         {
             if (i < health.curHealth)
