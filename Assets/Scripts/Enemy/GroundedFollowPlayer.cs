@@ -21,7 +21,8 @@ public class GroundedFollowPlayer : MonoBehaviour
     private int playerDir = 0;
     private EnemyHealth enemyHealth;
     private bool cachedQueryStartInColliders;
-
+    private bool isGrounded;
+    private CapsuleCollider2D collider;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         enemyHealth= GetComponent<EnemyHealth>();
         enemyHealth.exp = exp;
         cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+        collider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -48,6 +50,9 @@ public class GroundedFollowPlayer : MonoBehaviour
             }
         }
         if (enemyHealth && enemyHealth.isDead) playerDir = 0;
+        RaycastHit2D groundHit = Physics2D.CapsuleCast(transform.position, collider.size, collider.direction, 0, Vector2.down, rayLength, ground);
+        if (groundHit) isGrounded = true;
+        else isGrounded = false;
 
     }
 
@@ -65,10 +70,10 @@ public class GroundedFollowPlayer : MonoBehaviour
 
         Physics2D.queriesStartInColliders = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, curVelocity.normalized, rayLength, ground);
-        if(hit.collider != null)Debug.Log(hit.collider.gameObject.name);
+        //if(hit.collider != null)Debug.Log(hit.collider.gameObject.name);
         Physics2D.queriesStartInColliders = cachedQueryStartInColliders;
 
-        if (hit)rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (hit && isGrounded)rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
         curVelocity.y = rb.velocity.y;
 
