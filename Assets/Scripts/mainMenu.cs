@@ -3,31 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class mainMenu : MonoBehaviour
+
+public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    [SerializeField] GameObject canvas;
-
-    public void Play()
-    {
-        SceneManager.LoadSceneAsync(SceneNames.LEVELCONTROLLER, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
-        {
-            hideAssets();
-        };
-        
+    public void PlayGame(){
+        SceneManager.LoadScene("Stage"); // make sure the in the build, we have certain scenes preloaded
     }
-
-    public void loadCredits()
-    {
-        SceneManager.LoadSceneAsync(SceneNames.CREDITS, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
-        {
-            hideAssets();
-        };
+    public void QuitGame(){
+        Application.Quit();
     }
-
-    private void hideAssets()
-    {
-        canvas.SetActive(false);
-    }
+    
 }

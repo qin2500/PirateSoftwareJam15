@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour, Damageable
     private Rigidbody2D enemyRb;
     public int maxHealth = 5;
     public int curHealth;
-    public int exp = 0; //letting the individual enemy script be in charge of settin gthis
+    public int exp = 0; //letting the individual enemy script be in charge of setting this
     public float knockbackForce = 0;
     [HideInInspector]public bool isDead;
     [SerializeField] private float deathDelay = 2f;
@@ -21,6 +21,8 @@ public class EnemyHealth : MonoBehaviour, Damageable
     [SerializeField] GameObject burnParticleEffect;
     [SerializeField] GameObject smokeCloud;
     [SerializeField] GameObject explosion;
+    [SerializeField] ParticleSystem particleSystem;
+
     public int burnTicker = 0;
     public bool smokeOnDeath = false;
     public bool explodeOnDeath = false;
@@ -35,8 +37,8 @@ public class EnemyHealth : MonoBehaviour, Damageable
     {
         //apply burn damage
         if (burnTicker <= 0) return;
-        
-        if (burnTicker % 30 == 0)  TakeDamage(1);
+
+        if (burnTicker % 30 == 0) TakeDamage(1);
 
         if (burnParticleEffect)
         {
@@ -46,11 +48,11 @@ public class EnemyHealth : MonoBehaviour, Damageable
         }
 
         burnTicker--;
-
     }
     public void TakeDamage(int amount)
     {
         curHealth -= amount;
+        particleSystem.Play();
 
         if(curHealth <= 0 && !isDead)
         {

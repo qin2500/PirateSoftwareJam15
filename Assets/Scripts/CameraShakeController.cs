@@ -17,6 +17,7 @@ public class CameraShakeController : MonoBehaviour
 
     public void shakeCamera(float intensity, float duration)
     {
+        return;
         perlinNoise.m_AmplitudeGain= intensity;
         StartCoroutine(stopShake(duration));
 
