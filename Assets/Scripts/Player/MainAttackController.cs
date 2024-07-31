@@ -40,10 +40,8 @@ public class MainAttackController : MonoBehaviour
     void Update()
     {
         if (cooldown > 0)
-        {
-            cooldown--;
             return;
-        }
+        
         cooldown = GlobalReferences.PLAYER.potionCooldown;
 
         if (Input.GetMouseButtonDown(0))
@@ -87,6 +85,14 @@ public class MainAttackController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (cooldown > 0)
+        {
+            cooldown--;
+            return;
+        }
+    }
     public void returnToPool(GameObject bullet)
     {
         bullet.SetActive(false);
