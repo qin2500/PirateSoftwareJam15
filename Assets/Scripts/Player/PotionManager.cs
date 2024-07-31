@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class PotionManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PotionManager : MonoBehaviour
     private PlayerMovement playerMovement;
     private int cooldown = 10;
 
+    public event Action onNumPotionChange;
     private void Awake()
     {
         shadowPotionPool = new Queue<GameObject>();
@@ -55,6 +57,7 @@ public class PotionManager : MonoBehaviour
             if (shadowPotionPool.Count > 0)
             {
                 GameObject potion = shadowPotionPool.Dequeue();
+                onNumPotionChange.Invoke();
                 curAmmo = shadowPotionPool.Count;
                 potion.GetComponent<ShadowPotionController>().setInitialVelocity(10 + rb.velocity.magnitude * 0.5f);
                 potion.SetActive(true);
@@ -81,14 +84,9 @@ public class PotionManager : MonoBehaviour
         }
     }
 
-    public void ReturnPotionToPool(GameObject potion)
-    {
-        potion.SetActive(false);
-        shadowPotionPool.Enqueue(potion);
-    }
-
     public void addToPool(GameObject potion)
-    {
+    {   
+        onNumPotionChange.Invoke();
         potion.SetActive(false);
         shadowPotionPool.Enqueue(potion); //TODO: Specify pool
     }
