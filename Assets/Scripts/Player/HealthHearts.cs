@@ -1,42 +1,67 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthHearts : MonoBehaviour
 {
     public PlayerHealth health;
-    private int numOfHearts;
 
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    public GameObject heart;
+    public GameObject emptyHeart;
+    private Animator animator; 
+    private int tick;
+
+    private GameObject[] hearts ;
+    private GameObject[] emptyHearts;
 
     void Start(){
-       numOfHearts = health.maxHealth;
+       animator = GetComponent<Animator>();
+       InitializeHearts();
+       tick = 0;
+       health.onHealthChanged += UpdateHearts;
     }
     void Update(){
-        if (health.curHealth > numOfHearts){
-            health.curHealth = numOfHearts;
+
+        if (tick == 666){
+            tick = 0;
         }
+        tick++;
 
-        for (int i = 0; i < hearts.Length; i++){
-            if (i < health.curHealth ){
-                hearts[i].sprite = fullHeart;   
-            }
-            else{
-                hearts[i].sprite = emptyHeart;
-            }
+    }
 
-            if (i  < numOfHearts){
-                hearts[i].enabled = true;
+ 
+    void InitializeHearts()
+    {
+        hearts = new GameObject[health.maxHealth];
+        emptyHearts = new GameObject[health.maxHealth];
+        for (int i = 0; i < health.maxHealth; i++)
+        {
+            hearts[i] = Instantiate(heart, transform);
+            emptyHearts[i] = Instantiate(emptyHeart, transform);
+            hearts[i].SetActive(i < health.curHealth);
+            emptyHearts[i].SetActive(i >= health.curHealth);
+        }
+    }
+
+    void UpdateHearts()
+    {
+        for (int i = 0; i < health.maxHealth; i++)
+        {
+            if (i < health.curHealth)
+            {
+                hearts[i].SetActive(true);
+                emptyHearts[i].SetActive(false);
             }
-            else{
-                hearts[i].enabled = false;
+            else
+            {
+                hearts[i].SetActive(false);
+                emptyHearts[i].SetActive(true);
             }
         }
-
-
     }
 
 }

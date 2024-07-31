@@ -1,45 +1,67 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ShadowPotionHUD : MonoBehaviour
 {
-    public PotionManager potionManager;
-    private int numOfPotions;
+    public PotionManager potions;
 
-    public Image[] potions;
-    public Sprite fullPotions;
-    public Sprite emptyPotions;
+    public GameObject shadowBottle;
+    public GameObject emptyBottle;
+    private Animator animator; 
+    private int tick;
+
+    private GameObject[] shadowBottles ;
+    private GameObject[] emptyBottles;
 
     void Start(){
-       numOfPotions = potionManager.maxAmmo;
+       animator = GetComponent<Animator>();
+       InitializePotions();
+       tick = 0;
+       potions.onNumPotionChange += UpdatePotions;
     }
     void Update(){
-        // if health decrease animate the destruction animation
 
-        if (potionManager.curAmmo > numOfPotions){
-
-            potionManager.curAmmo  = numOfPotions;
+        if (tick == 666){
+            tick = 0;
         }
-
-        for (int i = 0; i < potions.Length; i++){
-            if (i < potionManager.curAmmo ){
-                potions[i].sprite = fullPotions;   
-            }
-            else{
-                potions[i].sprite = emptyPotions;
-            }
-
-            if (i  < numOfPotions){
-                potions[i].enabled = true;
-            }
-            else{
-                potions[i].enabled = false;
-            }
-        }
-
-        // if health at 1 hp animate the last one
-
+        tick++;
 
     }
+
+ 
+    void InitializePotions()
+    {
+        shadowBottles = new GameObject[potions.maxAmmo];
+        emptyBottles = new GameObject[potions.maxAmmo];
+        for (int i = 0; i < potions.maxAmmo; i++)
+        {
+            shadowBottles[i] = Instantiate(shadowBottle, transform);
+            emptyBottles[i] = Instantiate(emptyBottle, transform);
+            shadowBottles[i].SetActive(i < potions.curAmmo);
+            emptyBottles[i].SetActive(i >= potions.curAmmo);
+        }
+    }
+
+    void UpdatePotions()
+    {
+        for (int i = 0; i < potions.maxAmmo; i++)
+        {
+            if (i < potions.curAmmo)
+            {
+                shadowBottles[i].SetActive(true);
+                emptyBottles[i].SetActive(false);
+            }
+            else
+            {
+                shadowBottles[i].SetActive(false);
+                emptyBottles[i].SetActive(true);
+            }
+        }
+    }
+
 }
