@@ -33,18 +33,22 @@ public class PlayerHealth : MonoBehaviour, Damageable
         playerMovement = GetComponent<PlayerMovement>();
         curHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        GlobalReferences.PLAYER.Health = this;
     }
     public void TakeDamage(int amount)
     {
+        Debug.Log("Took damage");
+        if (!cameraShakeController) cameraShakeController = GlobalReferences.SHAKECONTROLLER;
         if(isInvincible || playerMovement.getSwimming())
         {
             return;
         }
         curHealth -= amount;
         StartCoroutine(InvincibilityCoroutine());
-        cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration   );
+        if (cameraShakeController) cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration);
         if (curHealth <= 0)
         {
+            Debug.Log("Should die");
             death();
         }
     }

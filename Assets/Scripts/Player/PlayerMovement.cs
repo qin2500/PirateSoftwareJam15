@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
         collider= GetComponent<CapsuleCollider2D>();
 
         cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+
+        GlobalReferences.PLAYER.PlayerObject = this.gameObject;
     }
 
     private void Update()

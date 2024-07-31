@@ -294,7 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d351a8688899f7a4a8040e1646b69aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundFXObject: {fileID: 9216416113891677935, guid: e4eeaa3b3e7e43c4dbf483b7d5a8a841, type: 3}
 --- !u!1 &1096380277
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e657a8a2c8b69404cba7790bfbbda933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 11647b7f2b5a44442b8881c303d93f73, type: 2}
 --- !u!1 &1345489150
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +364,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1345489150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee94da1b9e6105478e4eb71d745d470, type: 3}
+  m_Script: {fileID: 11500000, guid: 6134d207b777b9e479a481a1b50a3041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1345489152

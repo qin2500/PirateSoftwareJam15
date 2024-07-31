@@ -61,6 +61,11 @@ public class AlchemyUpgrade
             potionEffect.effectFunction(potion);
         }
     }
+
+    public bool isCombination()
+    {
+        return this.elements.Count > 1;
+    }
 }
 
 public enum Element
@@ -135,7 +140,10 @@ public class Pentagram
 {
     private HashSet<AlchemyUpgrade> upgrades;
 
-
+    public Pentagram()
+    {
+        upgrades = new HashSet<AlchemyUpgrade>();
+    }
     public void addUpgrade(AlchemyUpgrade upgrade)
     {
        upgrades.Add(upgrade);
@@ -151,11 +159,17 @@ public class Pentagram
         return upgrades.ToString();
     }
 
-    public void applyEffects()
+    public void applyEffects(LightBulletController potion)
     {
         foreach (var upgrade in upgrades)
         {
-            applyEffects();
+            Debug.Log("Applying Effect");
+            upgrade.applyEffect(potion);
         }
+    }
+
+    public int getNumCombinations()
+    {
+        return upgrades.Where(upgrade => upgrade.isCombination()).Count();
     }
 }

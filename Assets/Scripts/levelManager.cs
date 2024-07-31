@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 {
 
     private int _wave = 0;
-    [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text expTracker;
     [SerializeField] private TMP_Text waveCounter;
 
 
@@ -30,6 +30,12 @@ public class LevelManager : MonoBehaviour
         GlobalEvents.PlayerDeath.uninvoke();
         GlobalEvents.LevelComplete.uninvoke();
         GlobalEvents.PlayerStartedMoving.uninvoke();
+
+        //load arena
+        loadArena();
+        //load tutorial
+
+
     }
 
     // Update is called once per frame
@@ -37,10 +43,9 @@ public class LevelManager : MonoBehaviour
     {
         if (stopUpdating) return;
 
-        if (GlobalReferences.PLAYER.Exp > GlobalReferences.LEVELEXP)
+        if (GlobalReferences.PLAYER.Exp >= GlobalReferences.LEVELEXP)
         {
-
-
+            levelUpPlayer();
         }
         if (GlobalEvents.PlayerStartedMoving.Invoked() && !GlobalEvents.PlayerPause.Invoked())
         {
@@ -82,6 +87,8 @@ public class LevelManager : MonoBehaviour
 
         }
 
+        expTracker.text = $@"Level: {GlobalReferences.PLAYER.Level} - Exp: {GlobalReferences.PLAYER.Exp}/100";
+
     }
 
     public void setWave(int wave)
@@ -98,12 +105,11 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Loading wave: " + this._wave);
             SceneManager.LoadSceneAsync("wave " + this._wave, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
             {
-                SceneManager.LoadSceneAsync("Player Controller", mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
-                {
+              
                     Debug.Log("Loaded wave: " + this._wave);
 
                     waveCounter.text = "Wave " + this._wave;
-                };
+               
             };
         });
     }
@@ -175,5 +181,32 @@ public class LevelManager : MonoBehaviour
     private string levelString()
     {
         return "level" + this._wave;
+    }
+
+    private void loadArena()
+    {
+        SceneManager.LoadSceneAsync(SceneNames.ARENA, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+        {
+            SceneManager.LoadSceneAsync(SceneNames.PLAYERCONTROLLER, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+            {
+                //idk what to add here
+                SceneManager.LoadSceneAsync(SceneNames.TUTORIAL, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
+                {
+                    //idk what to add here
+                };
+            };
+        };
+    }
+
+    private void levelUpPlayer()
+    {
+        GlobalReferences.PLAYER.Exp -= 100; //race condition but who cares
+        GlobalReferences.PLAYER.Level += 1;
+        if (GlobalReferences.PLAYER.Level % 5 == 0)
+        {
+            //upgrade time
+
+           displayUpgradeMenu();
+        }
     }
 }
