@@ -75,6 +75,16 @@ public class AlchemyUpgrade
     {
         return this.elements.Count > 1;
     }
+
+    public Element getFirstElement()
+    {
+        return this.elements.First();
+    }
+
+    public Element? getOtherElement(Element firstElement)
+    {
+        return this.elements.Where(element => element != firstElement).FirstOrDefault(null);
+    }
 }
 
 public enum Element
@@ -185,6 +195,11 @@ public class Pentagram
     public int getNumCombinations()
     {
         return upgrades.Where(upgrade => upgrade.isCombination()).Count();
+    }
+
+    public List<AlchemyUpgrade> getUpgrades()
+    {
+        return upgrades.ToList();
     }
 }
 
