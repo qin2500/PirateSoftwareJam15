@@ -6,19 +6,21 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class EnemyHealth : MonoBehaviour, Damageable
 {
+    private Rigidbody2D enemyRb;
     public int maxHealth = 5;
     public int curHealth;
     public int exp = 0; //letting the individual enemy script be in charge of settin gthis
+    public float knockbackForce = 0;
     [HideInInspector]public bool isDead;
     [SerializeField] private float deathDelay = 2f;
     [SerializeField] GameObject deathEffect;
     [SerializeField] GameObject particleOrigin;
-
     [SerializeField] Animator spriteAnimator;
     [SerializeField] Collider2D damageCollider;
     public void Awake()
     {
         curHealth = maxHealth;
+        enemyRb = GetComponent<Rigidbody2D>();
     }
     public void TakeDamage(int amount)
     {
@@ -52,6 +54,13 @@ public class EnemyHealth : MonoBehaviour, Damageable
             else Instantiate(deathEffect, particleOrigin.transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
+    }
+
+    public void knockBack(Transform transf)
+    {
+            Vector2 knockbackDirection = (transform.position - transf.position).normalized;
+            knockbackDirection.y += 2;
+            enemyRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
     }
 
     public void setExp(int exp)

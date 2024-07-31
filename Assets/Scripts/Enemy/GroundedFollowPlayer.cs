@@ -11,6 +11,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int exp;
+    [SerializeField] private float knockbackForce;
 
     private Rigidbody2D rb;
     private Vector2 curVelocity;
@@ -23,6 +24,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyHealth= GetComponent<EnemyHealth>();
         enemyHealth.exp = exp;
+        enemyHealth.knockbackForce = knockbackForce;
     }
 
     // Update is called once per frame
