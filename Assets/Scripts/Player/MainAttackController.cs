@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MainAttackController : MonoBehaviour
 {
+    [SerializeField] public AudioClip lightPotionCrash;
+    [SerializeField] private AudioClip potionThrowClip;
     [SerializeField] private int potionPoolSize = 10;
     [SerializeField] private float throwPower;
     [SerializeField] private float timeToDisableBullet;
@@ -44,6 +46,8 @@ public class MainAttackController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            SoundFXManager.instance.PlaySoundFXClip(potionThrowClip, transform, 1f);
+
             int numToThrow = GlobalReferences.PLAYER.Pentagram.getNumCombinations();
             //DEBUGGING
             //numToThrow = 2;
@@ -60,6 +64,7 @@ public class MainAttackController : MonoBehaviour
                     bullet.GetComponent<LightBulletController>().setDamage(damage);
 
                     bullet.SetActive(true);
+
 
                     //Calulate Direction vector to mouse
                     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

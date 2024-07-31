@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ShadowPotionController : MonoBehaviour
 {
+
     private Rigidbody2D rb;
     public LayerMask ground;
     private PotionManager manager;
@@ -34,6 +35,8 @@ public class ShadowPotionController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        SoundFXManager.instance.PlaySoundFXClip(manager.shadowPotionCrashClip, transform, 1f);
+
         //Spawn Shadow pool here
         if (((1 << collision.gameObject.layer) & ground) != 0)
         {

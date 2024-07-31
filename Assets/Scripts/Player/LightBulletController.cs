@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class LightBulletController : MonoBehaviour
 {
     private MainAttackController mainAttackController;
+    
     [SerializeField] private GameObject aoeParticleEffect;
     [SerializeField] private GameObject particleOrigin;
     [SerializeField] private GameObject healingPotion;
@@ -30,6 +31,7 @@ public class LightBulletController : MonoBehaviour
 
     private void Awake()
     {
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -49,6 +51,7 @@ public class LightBulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        SoundFXManager.instance.PlaySoundFXClip(mainAttackController.lightPotionCrash, transform, 1f);
 
         if (!particleOrigin)
             Instantiate(aoeParticleEffect, transform.position, Quaternion.identity);
