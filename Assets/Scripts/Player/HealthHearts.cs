@@ -5,21 +5,26 @@ using UnityEngine.UI;
 
 public class HealthHearts : MonoBehaviour
 {
-    public int health ;
-    public int numOfHearts;
+    public PlayerHealth health;
+    private int numOfHearts;
 
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
+    void Start(){
+       numOfHearts = health.maxHealth;
+    }
     void Update(){
-        if (health > numOfHearts){
-            health = numOfHearts;
+        if (health.curHealth > numOfHearts){
+            health.curHealth = numOfHearts;
         }
 
         for (int i = 0; i < hearts.Length; i++){
-            if (i < health ){
-                hearts[i].sprite = fullHeart;
+            if (i < health.curHealth ){
+                hearts[i].sprite = fullHeart;   
+            }
+            else{
                 hearts[i].sprite = emptyHeart;
             }
 
