@@ -11,7 +11,7 @@ public class MainAttackController : MonoBehaviour
     [SerializeField] private GameObject lightBullet;
     [SerializeField] private GameObject bulletOrigin;
     [SerializeField] private int damage;
-    private int cooldown = GlobalReferences.PLAYER.potionCooldown;
+    private int cooldown = 0;
 
     private Queue<GameObject> potionPool;
 
@@ -41,7 +41,7 @@ public class MainAttackController : MonoBehaviour
     {
         if (cooldown > 0)
             return;
-            
+
         if (Input.GetMouseButtonDown(0))
         {
             int numToThrow = GlobalReferences.PLAYER.Pentagram.getNumCombinations();

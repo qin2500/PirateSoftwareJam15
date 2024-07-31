@@ -12,6 +12,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int exp;
+    [SerializeField] private float knockbackForce;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float jumpForce;
     [SerializeField] private float rayLength = 0.5f;
@@ -20,6 +21,7 @@ public class GroundedFollowPlayer : MonoBehaviour
     private Vector2 curVelocity;
     private int playerDir = 0;
     private EnemyHealth enemyHealth;
+    private int slowFrames;
     private bool cachedQueryStartInColliders;
 
     // Start is called before the first frame update
@@ -28,12 +30,15 @@ public class GroundedFollowPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyHealth= GetComponent<EnemyHealth>();
         enemyHealth.exp = exp;
+        enemyHealth.knockbackForce = knockbackForce;
         cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (slowFrames > 0) return;
+
         if (!player) player = GlobalReferences.PLAYER.PlayerObject;
         if(playerDir != 0)spriteRenderer.flipX = playerDir == -1;
         if(player)
@@ -53,6 +58,12 @@ public class GroundedFollowPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (slowFrames > 0)
+        {
+            slowFrames--;
+            return;
+        }
+
         //Movement
         if (playerDir == 0)
         {
@@ -73,5 +84,7 @@ public class GroundedFollowPlayer : MonoBehaviour
         curVelocity.y = rb.velocity.y;
 
         rb.velocity = curVelocity;
+
+        slowFrames = enemyHealth.slowFrames;
     }
 }

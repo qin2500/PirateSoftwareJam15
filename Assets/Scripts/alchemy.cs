@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class AlchemyUpgrade
 {
@@ -22,9 +23,19 @@ public class AlchemyUpgrade
         return elements.GetHashCode();
     }
 
+    public AlchemyUpgrade (Element element1, Element? element2)
+    {
+        this.elements = new HashSet<Element> { element1 };
+
+        this.elements.Add(element1);
+        if (element2.HasValue) this.elements.Add(element2.Value);
+
+        this.effect = new Effect ();
+    }
+
     public static AlchemyUpgrade from(Element element1, Element? element2)
     {
-        AlchemyUpgrade upgrade = new AlchemyUpgrade();
+        AlchemyUpgrade upgrade = new AlchemyUpgrade(element1, element2);
         upgrade.elements = new HashSet<Element> { element1};
 
         if (element2.HasValue)
@@ -42,9 +53,7 @@ public class AlchemyUpgrade
         {
             if (otherElement.elements.Equals(this.elements)) return true;
         }
-
         return false;
-
     }
 
     public void applyEffect(LightBulletController potion)
@@ -75,19 +84,18 @@ public enum Element
     Grass
 }
 
-public static class AlchemyUpgradeFactory
-{
-
-}
-
 public static class EffectFactory
 {
-    public static Effect from(Element element1, Element? element2)
-    {
-        //TODO: Fill in
+    public static Effect FIRE_EFFECT = new PlayerEffect("Boosted attack speed", player => player.potionCooldown -= 2);
+    public static Effect WATER_EFFECT = new PotionEffect("Boosted aoe", potion => potion.radius *= (float) 1.2);
+    public static Effect GRASS_EFFECT = new PotionEffect("Boosted knockback", potion => potion.knockbackForce *= (float)1.2);
+    public static Effect FIRE_FIRE_EFFECT = new PotionEffect("Burn Damage", potion => potion.burnEnemies = true);
+    public static Effect WATER_WATER_EFFECT = new PotionEffect("Bounce off enemies", potion => potion.chainBounce = true);
+    public static Effect GRASS_GRASS_EFFECT = new PotionEffect("Enemies drop healing items on hit", potion => potion.healOnHit = true);
+    public static Effect FIRE_WATER_EFFECT = new PotionEffect("Smoke cloud on enemy death", potion => potion.smokeOnDeath = true);
+    public static Effect FIRE_GRASS_EFFECT = new PotionEffect("Enemy explodes on death", potion => potion.explodeOnDeath = true);
+    public static Effect WATER_GRASS_EFFECT = new PotionEffect("Enemy slows on hit", potion => potion.slowFrames = 5);
 
-        return new Effect();
-    }
 }
 
 public enum EffectType
@@ -134,6 +142,12 @@ public class PotionEffect:Effect
 {
         public string name;
         public Action<LightBulletController> effectFunction;
+
+    public PotionEffect(string name, Action<LightBulletController> effectFunction)
+    {
+        this.name = name;
+        this.effectFunction = effectFunction;
+    }       
 }
 
 public class Pentagram
@@ -172,4 +186,9 @@ public class Pentagram
     {
         return upgrades.Where(upgrade => upgrade.isCombination()).Count();
     }
+}
+
+public static class AlchemyConstants
+{
+
 }
