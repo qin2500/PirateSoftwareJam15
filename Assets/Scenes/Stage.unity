@@ -38016,7 +38016,6 @@ MonoBehaviour:
   deceleration: 100
   spriteRenderer: {fileID: 1653226374}
   exp: 0
-  knockbackForce: 0
   ground:
     serializedVersion: 2
     m_Bits: 128
@@ -38155,6 +38154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c6beacc93f5c640bd6403a444cc1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpClip: {fileID: 8300000, guid: 82348c9a167af634bb05b9eda270c0aa, type: 3}
   settings: {fileID: 11400000, guid: d737a79e67f9d424e9d972e768becfaf, type: 2}
   jumping: 0
   swimming: 0
@@ -38313,7 +38313,6 @@ MonoBehaviour:
   deceleration: 100
   spriteRenderer: {fileID: 395613570}
   exp: 0
-  knockbackForce: 0
   ground:
     serializedVersion: 2
     m_Bits: 128
@@ -43788,6 +43787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 1228687590}
+  playerDamagedClip: {fileID: 8300000, guid: ad9cbe548202b66479ca1571e783bc20, type: 3}
   heart: {fileID: 4939536640284509614, guid: d814fcaec6a713446b52a685d13254d6, type: 3}
   emptyHeart: {fileID: 6511042960392774946, guid: c946f5a7afa78bf4f9c194910fddfd0d, type: 3}
 --- !u!1 &1608519332
