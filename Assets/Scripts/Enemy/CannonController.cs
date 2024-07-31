@@ -53,7 +53,7 @@ public class CannonController : MonoBehaviour
     {
         mainAttackController.returnToPool(gameObject);
     }
-S
+
 
 
     public void setThrowPower(float power)
