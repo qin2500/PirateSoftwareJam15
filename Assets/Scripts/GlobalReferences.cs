@@ -36,7 +36,7 @@ public class Player
     public string Username { get { return username; } set { username = value; } }
     public int Score { get { return score; } set { score = value; } }
     public Vector2 startPosition = new Vector2(-2.62f, 3.55f);
-    public int potionCooldown = 0;
+    public int potionCooldown = 30;
     public int Level { get { return level; } set { level = value; } }
     public int Exp { get { return exp; } set { exp = value; } }
 

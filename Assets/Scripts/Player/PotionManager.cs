@@ -38,13 +38,15 @@ public class PotionManager : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        cooldown--;
+    }
+
     private void Update()
     {
-        if (cooldown > 0)
-        {
-            cooldown--;
-            return;
-        }
+        if (cooldown > 0) return;
+
         cooldown = GlobalReferences.PLAYER.potionCooldown;
         
         if (Input.GetMouseButtonDown(1))
