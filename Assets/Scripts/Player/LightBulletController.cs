@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +8,13 @@ using UnityEngine.UI;
 public class LightBulletController : MonoBehaviour
 {
     private MainAttackController mainAttackController;
+    [SerializeField] private GameObject aoeParticleEffect;
+    [SerializeField] private GameObject particleOrigin;
     private Rigidbody2D rb;
     private float throwPower;
     private LayerMask ground;
-    private int damage; 
+    private int damage;
+    public float radius;
 
     public float timeToDisable;
 
@@ -34,17 +38,22 @@ public class LightBulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (((1 << collision.gameObject.layer) & ground) != 0)
-        {
-            killBullet();
-        }
-        else if(collision.gameObject.CompareTag("Enemy"))
-        {
-            collision.gameObject.GetComponent<Damageable>().TakeDamage(damage);
-            GlobalReferences.PLAYER.Pentagram.applyEffects(this);
 
-            killBullet();
-        }
+        if (!particleOrigin)
+            Instantiate(aoeParticleEffect, transform.position, Quaternion.identity);
+        else Instantiate(aoeParticleEffect, particleOrigin.transform.position, Quaternion.identity);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, 0);
+
+
+        colliders.ToList().ForEach(collider =>
+        {
+            if (collider.gameObject.CompareTag("Enemy"))
+            {
+                collider.GetComponent<Damageable>().TakeDamage(damage);
+                GlobalReferences.PLAYER.Pentagram.applyEffects(this);
+                killBullet();
+            }
+        });
     }
     private void killBullet()
     {

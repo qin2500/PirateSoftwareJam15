@@ -1215,7 +1215,7 @@ Transform:
   m_GameObject: {fileID: 635096485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8478441, y: 1.5099999, z: -11}
+  m_LocalPosition: {x: -0.82995564, y: 1.5099999, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4204,6 +4204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadowPotion: {fileID: 0}
+  maxAmmo: 3
+  curAmmo: 3
   throwOrigin: {fileID: 686460017}
   shadow: {fileID: 581028809232212418, guid: 97896b85efded5946b6bb1564d3e199f, type: 3}
   shadowPuddleLife: 5
@@ -4337,6 +4339,8 @@ MonoBehaviour:
   maxSpeed: 3
   deceleration: 100
   spriteRenderer: {fileID: 100930701}
+  exp: 0
+  knockbackForce: 0
 --- !u!4 &1247198899
 Transform:
   m_ObjectHideFlags: 0
@@ -4395,10 +4399,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   curHealth: 0
+  exp: 0
+  knockbackForce: 0
   isDead: 0
   deathDelay: 2
   deathEffect: {fileID: 2669113163075602650, guid: 5aac2a9d24b9f98429bf13a93b5189f4, type: 3}
-  particalOrigin: {fileID: 49301644}
+  particleOrigin: {fileID: 0}
   spriteAnimator: {fileID: 1247198902}
   damageCollider: {fileID: 100930702}
 --- !u!95 &1247198902
@@ -5111,7 +5117,7 @@ Transform:
   m_GameObject: {fileID: 1870544487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8478441, y: 1.5099999, z: -11}
+  m_LocalPosition: {x: -0.82995564, y: 1.5099999, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerController.unity
     guid: 137b5962cd66a24489eb6c18b27fc09e
   - enabled: 1
-    path: Assets/Scenes/PlayerMovement.unity
+    path: Assets/Scenes/Stage.unity
     guid: e436e448125b09544aa8dec5b2163379
   - enabled: 1
     path: Assets/Scenes/UpgradeMenu.unity
