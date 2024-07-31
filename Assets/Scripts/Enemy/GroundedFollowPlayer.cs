@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,3 +81,4 @@ public class GroundedFollowPlayer : MonoBehaviour
         rb.velocity = curVelocity;
     }
 }
+

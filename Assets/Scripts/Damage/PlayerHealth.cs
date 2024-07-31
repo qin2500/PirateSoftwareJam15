@@ -60,11 +60,11 @@ public class PlayerHealth : MonoBehaviour, Damageable
         onHealthChanged.Invoke();
         curHealth = Mathf.Max(maxHealth, curHealth + amount);
     }
-    public void knockBack(Transform trans)
+    public void knockBack(Transform transf)
     {
         if (!isInvincible && !playerMovement.getSwimming())
         {
-            Vector2 knockbackDirection = (transform.position - trans.position).normalized;
+            Vector2 knockbackDirection = (transform.position - transf.position).normalized;
             knockbackDirection.y += 2;
             //rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
             playerMovement.setHitStunVelocity((knockbackDirection.normalized * knockbackForce));

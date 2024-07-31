@@ -63,6 +63,6 @@ public static class SceneNames
     public const string GAMEMANAGER = "GameManager";
     public const string UPGRADEMENU = "UpgradeMenu";
     public const string COMBINEMENU = "CombineMenu";
-    public const string ARENA = "PlayerMovement"; //TODO: PLEASE CHANGE THIS NAME
+    public const string STAGE = "Stage"; //TODO: PLEASE CHANGE THIS NAME
     public const string TUTORIAL = "Tutorial";
 }
