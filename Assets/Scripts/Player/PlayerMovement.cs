@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
         collider= GetComponent<CapsuleCollider2D>();
 
         cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+
+        GlobalReferences.PLAYER.PlayerObject = this.gameObject;
     }
 
     private void Update()
@@ -177,6 +179,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ExecuteJump()
     {
+        Debug.Log("Executing Jump");
         jumpEndedEarly = false;
         jumpTime = 0;
         canJumpBuffer = false;

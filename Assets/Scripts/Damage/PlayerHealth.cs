@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour, Damageable
     [Header("Death")]
     [SerializeField] private float deathDelay = 2f;
     [SerializeField] GameObject deathEffect;
-    [SerializeField] GameObject particalOrigin;
+    [SerializeField] GameObject particleOrigin;
     [SerializeField] Animator spriteAnimator;
 
     [Header("OnDamage")]
@@ -33,18 +33,22 @@ public class PlayerHealth : MonoBehaviour, Damageable
         playerMovement = GetComponent<PlayerMovement>();
         curHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        GlobalReferences.PLAYER.Health = this;
     }
     public void TakeDamage(int amount)
     {
+        Debug.Log("Took damage");
+        if (!cameraShakeController) cameraShakeController = GlobalReferences.SHAKECONTROLLER;
         if(isInvincible || playerMovement.getSwimming())
         {
             return;
         }
         curHealth -= amount;
         StartCoroutine(InvincibilityCoroutine());
-        cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration   );
+        if (cameraShakeController) cameraShakeController.shakeCamera(camShakeAmplitude, camShakeDuration);
         if (curHealth <= 0)
         {
+            Debug.Log("Should die");
             death();
         }
     }
@@ -83,7 +87,8 @@ public class PlayerHealth : MonoBehaviour, Damageable
     {
         if (spriteAnimator) spriteAnimator.Play("Death");
         isDead = true;
-        Debug.Log("YOU ARE DIE!!");
+        Debug.Log("Player died!!");
+        GlobalEvents.PlayerDeath.invoke();
         //Destroy(gameObject, deathDelay);
     }
     
@@ -91,9 +96,9 @@ public class PlayerHealth : MonoBehaviour, Damageable
     {
         if (deathEffect)
         {
-            if (!particalOrigin)
+            if (!particleOrigin)
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
-            else Instantiate(deathEffect, particalOrigin.transform.position, Quaternion.identity);
+            else Instantiate(deathEffect, particleOrigin.transform.position, Quaternion.identity);
         }
     }
 }

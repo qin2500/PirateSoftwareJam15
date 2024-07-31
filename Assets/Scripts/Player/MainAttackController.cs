@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MainAttackController : MonoBehaviour
@@ -10,6 +11,7 @@ public class MainAttackController : MonoBehaviour
     [SerializeField] private GameObject lightBullet;
     [SerializeField] private GameObject bulletOrigin;
     [SerializeField] private int damage;
+    private int cooldown = GlobalReferences.PLAYER.potionCooldown;
 
     private Queue<GameObject> potionPool;
 
@@ -37,36 +39,50 @@ public class MainAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (cooldown > 0)
+        {
+            cooldown--;
+            return;
+        }
+        cooldown = GlobalReferences.PLAYER.potionCooldown;
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (potionPool.Count > 0)
+            int numToThrow = GlobalReferences.PLAYER.Pentagram.getNumCombinations();
+            //DEBUGGING
+            //numToThrow = 2;
+            if (numToThrow == 0) numToThrow = 1;
+            for (int i = 0; i < numToThrow; i++)
             {
-                GameObject bullet = potionPool.Dequeue();
+                if (potionPool.Count > 0)
+                {
+                    GameObject bullet = potionPool.Dequeue();
 
-                bullet.transform.parent = transform;
-                bullet.transform.position = bulletOrigin.transform.position;
-                bullet.GetComponent<LightBulletController>().setThrowPower(throwPower);
-                bullet.GetComponent<LightBulletController>().setDamage(damage) ;
+                    bullet.transform.parent = transform;
+                    bullet.transform.position = bulletOrigin.transform.position;
+                    bullet.GetComponent<LightBulletController>().setThrowPower(throwPower);
+                    bullet.GetComponent<LightBulletController>().setDamage(damage);
 
-                bullet.SetActive(true);
+                    bullet.SetActive(true);
 
-                //Calulate Direction vector to mouse
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 direction = mousePosition - bulletOrigin.transform.position;
-                direction.z = 0;
+                    //Calulate Direction vector to mouse
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 direction = mousePosition - bulletOrigin.transform.position;
+                    direction.z = 0;
 
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
 
-                bullet.transform.position = bulletOrigin.transform.position;
-                bullet.transform.rotation = rotation;
+                    bullet.transform.position = bulletOrigin.transform.position;
+                    bullet.transform.rotation = rotation;
 
+                    bullet.transform.position += Vector3.up*1*i;
 
-
-            }
-            else
-            {
-                Debug.LogWarning("No grenades available in the pool.");
+                }
+                else
+                {
+                    Debug.LogWarning("No grenades available in the pool.");
+                }
             }
         }
     }
