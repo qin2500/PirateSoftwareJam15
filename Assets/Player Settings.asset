@@ -32,5 +32,5 @@ MonoBehaviour:
   coyoteTime: 0.15
   jumpBuffer: 0.2
   swimSpeed: 15
-  shadowJumpPower: 60
+  shadowJumpPower: 30
   shadowJumpHorizontalAcceleration: 10
