@@ -409,6 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906b500c8f15b08489433b66f1d34f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightPotionCrash: {fileID: 8300000, guid: cca0bb1fb45b4884e85b81bec01a9c8e, type: 3}
+  potionThrowClip: {fileID: 8300000, guid: 7a70a5cc7c2881d4693e31376f3fd831, type: 3}
   potionPoolSize: 10
   throwPower: 24
   timeToDisableBullet: 1
@@ -442,6 +444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadowPotion: {fileID: 5768674368919904295, guid: 75584c1b9e43591419cc08ac0f07a21f, type: 3}
+  shadowPotionCrashClip: {fileID: 8300000, guid: cca0bb1fb45b4884e85b81bec01a9c8e, type: 3}
+  maxAmmo: 3
+  curAmmo: 3
   throwOrigin: {fileID: 2108868543}
   shadow: {fileID: 581028809232212418, guid: 97896b85efded5946b6bb1564d3e199f, type: 3}
   shadowPuddleLife: 5
@@ -457,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c6beacc93f5c640bd6403a444cc1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpClip: {fileID: 8300000, guid: 82348c9a167af634bb05b9eda270c0aa, type: 3}
   settings: {fileID: 11400000, guid: d737a79e67f9d424e9d972e768becfaf, type: 2}
   jumping: 0
   swimming: 0

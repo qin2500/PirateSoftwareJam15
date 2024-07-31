@@ -186,14 +186,7 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneNames.STAGE, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
         {
-            SceneManager.LoadSceneAsync(SceneNames.PLAYERCONTROLLER, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
-            {
-                //idk what to add here
-                SceneManager.LoadSceneAsync(SceneNames.TUTORIAL, mode: LoadSceneMode.Additive).completed += (asyncOperation) =>
-                {
-                    //idk what to add here
-                };
-            };
+           
         };
     }
 
