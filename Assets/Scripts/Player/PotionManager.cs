@@ -14,7 +14,7 @@ public class PotionManager : MonoBehaviour
     [SerializeField] private GameObject shadow;
     [SerializeField] private float shadowPuddleLife;
     private PlayerMovement playerMovement;
-    private int cooldown = 10;
+    private int cooldown = 0;
 
     private void Awake()
     {
@@ -46,8 +46,6 @@ public class PotionManager : MonoBehaviour
     private void Update()
     {
         if (cooldown > 0) return;
-
-        cooldown = GlobalReferences.PLAYER.potionCooldown;
         
         if (Input.GetMouseButtonDown(1))
         {

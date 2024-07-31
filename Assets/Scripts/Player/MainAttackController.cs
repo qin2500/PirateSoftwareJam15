@@ -41,9 +41,7 @@ public class MainAttackController : MonoBehaviour
     {
         if (cooldown > 0)
             return;
-        
-        cooldown = GlobalReferences.PLAYER.potionCooldown;
-
+            
         if (Input.GetMouseButtonDown(0))
         {
             int numToThrow = GlobalReferences.PLAYER.Pentagram.getNumCombinations();
@@ -82,6 +80,7 @@ public class MainAttackController : MonoBehaviour
                     Debug.LogWarning("No grenades available in the pool.");
                 }
             }
+            cooldown = GlobalReferences.PLAYER.potionCooldown;
         }
     }
 

@@ -16,13 +16,17 @@ public class EnemyHealth : MonoBehaviour, Damageable
 
     [SerializeField] Animator spriteAnimator;
     [SerializeField] Collider2D damageCollider;
+    [SerializeField] ParticleSystem particleSystem;
     public void Awake()
     {
         curHealth = maxHealth;
+        particleSystem = GetComponent<ParticleSystem>();
+        particleSystem.Stop();
     }
     public void TakeDamage(int amount)
     {
         curHealth -= amount;
+        particleSystem.Play();
 
         if(curHealth <= 0 && !isDead)
         {
